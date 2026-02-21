@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Symkit\CrudBundle\Tests\Unit\Crud\Enum;
 
 use PHPUnit\Framework\TestCase;
-use Symkit\CrudBundle\Crud\Enum\CrudEvents;
+use Symkit\CrudBundle\Enum\CrudEvents;
 
 final class CrudEventsTest extends TestCase
 {

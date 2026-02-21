@@ -6,7 +6,7 @@ namespace Symkit\CrudBundle\Tests\Unit\Crud\Persistence\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
-use Symkit\CrudBundle\Crud\Persistence\Handler\DoctrinePersistenceHandler;
+use Symkit\CrudBundle\Persistence\Handler\DoctrinePersistenceHandler;
 
 final class DoctrinePersistenceHandlerTest extends TestCase
 {

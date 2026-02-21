@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symkit\CrudBundle\Contract\CrudPersistenceManagerInterface;
-use Symkit\CrudBundle\Crud\Controller\AbstractCrudController;
+use Symkit\CrudBundle\Controller\AbstractCrudController;
 use Symkit\MetadataBundle\Contract\PageContextBuilderInterface;
 
 final class AbstractCrudControllerTest extends TestCase

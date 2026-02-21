@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symkit\CrudBundle\Crud\Component;
+namespace Symkit\CrudBundle\Component;
 
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\FormFactoryInterface;

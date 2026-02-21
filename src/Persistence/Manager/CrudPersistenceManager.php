@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Symkit\CrudBundle\Crud\Persistence\Manager;
+namespace Symkit\CrudBundle\Persistence\Manager;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symkit\CrudBundle\Contract\CrudPersistenceHandlerInterface;
 use Symkit\CrudBundle\Contract\CrudPersistenceManagerInterface;
-use Symkit\CrudBundle\Crud\Enum\CrudEvents;
-use Symkit\CrudBundle\Crud\Event\CrudEvent;
+use Symkit\CrudBundle\Enum\CrudEvents;
+use Symkit\CrudBundle\Event\CrudEvent;
 
 final class CrudPersistenceManager implements CrudPersistenceManagerInterface
 {

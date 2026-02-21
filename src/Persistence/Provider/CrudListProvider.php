@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Symkit\CrudBundle\Crud\Persistence\Provider;
+namespace Symkit\CrudBundle\Persistence\Provider;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symkit\CrudBundle\Contract\CrudListProviderInterface;
-use Symkit\CrudBundle\Crud\Enum\CrudEvents;
-use Symkit\CrudBundle\Crud\Event\CrudListQueryEvent;
+use Symkit\CrudBundle\Enum\CrudEvents;
+use Symkit\CrudBundle\Event\CrudListQueryEvent;
 
 final class CrudListProvider implements CrudListProviderInterface
 {

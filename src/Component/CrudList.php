@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symkit\CrudBundle\Crud\Component;
+namespace Symkit\CrudBundle\Component;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;

@@ -6,7 +6,7 @@ namespace Symkit\CrudBundle\Tests\Unit\Crud\Event;
 
 use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\TestCase;
-use Symkit\CrudBundle\Crud\Event\CrudListQueryEvent;
+use Symkit\CrudBundle\Event\CrudListQueryEvent;
 
 final class CrudListQueryEventTest extends TestCase
 {

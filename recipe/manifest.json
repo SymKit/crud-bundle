@@ -1,6 +1,6 @@
 {
     "bundles": {
-        "Symkit\\CrudBundle\\CrudBundle": [
+        "Symkit\\CrudBundleBundle": [
             "all"
         ]
     },

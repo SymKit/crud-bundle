@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symkit\CrudBundle\Crud\Event;
+namespace Symkit\CrudBundle\Event;
 
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Contracts\EventDispatcher\Event;

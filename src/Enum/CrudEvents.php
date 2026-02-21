@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symkit\CrudBundle\Crud\Enum;
+namespace Symkit\CrudBundle\Enum;
 
 enum CrudEvents: string
 {

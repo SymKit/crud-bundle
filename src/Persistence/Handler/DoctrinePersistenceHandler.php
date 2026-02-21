@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symkit\CrudBundle\Crud\Persistence\Handler;
+namespace Symkit\CrudBundle\Persistence\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symkit\CrudBundle\Contract\CrudPersistenceHandlerInterface;

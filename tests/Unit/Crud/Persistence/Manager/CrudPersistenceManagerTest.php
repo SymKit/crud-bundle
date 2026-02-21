@@ -9,9 +9,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symkit\CrudBundle\Contract\CrudPersistenceHandlerInterface;
-use Symkit\CrudBundle\Crud\Enum\CrudEvents;
-use Symkit\CrudBundle\Crud\Event\CrudEvent;
-use Symkit\CrudBundle\Crud\Persistence\Manager\CrudPersistenceManager;
+use Symkit\CrudBundle\Enum\CrudEvents;
+use Symkit\CrudBundle\Event\CrudEvent;
+use Symkit\CrudBundle\Persistence\Manager\CrudPersistenceManager;
 
 final class CrudPersistenceManagerTest extends TestCase
 {

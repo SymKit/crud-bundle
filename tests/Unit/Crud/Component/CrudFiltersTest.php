@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symkit\CrudBundle\Crud\Component\CrudFilters;
+use Symkit\CrudBundle\Component\CrudFilters;
 
 final class CrudFiltersTest extends TestCase
 {

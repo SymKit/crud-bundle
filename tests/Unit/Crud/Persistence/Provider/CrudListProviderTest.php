@@ -13,9 +13,9 @@ use Doctrine\ORM\Query\Expr\Orx;
 use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symkit\CrudBundle\Crud\Enum\CrudEvents;
-use Symkit\CrudBundle\Crud\Event\CrudListQueryEvent;
-use Symkit\CrudBundle\Crud\Persistence\Provider\CrudListProvider;
+use Symkit\CrudBundle\Enum\CrudEvents;
+use Symkit\CrudBundle\Event\CrudListQueryEvent;
+use Symkit\CrudBundle\Persistence\Provider\CrudListProvider;
 
 final class CrudListProviderTest extends TestCase
 {

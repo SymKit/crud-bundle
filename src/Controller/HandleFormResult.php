@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symkit\CrudBundle\Crud\Controller;
+namespace Symkit\CrudBundle\Controller;
 
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Response;

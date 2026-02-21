@@ -7,7 +7,7 @@ namespace Symkit\CrudBundle\Tests\Unit\Crud\Event;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symkit\CrudBundle\Crud\Event\CrudEvent;
+use Symkit\CrudBundle\Event\CrudEvent;
 
 final class CrudEventTest extends TestCase
 {

@@ -9,7 +9,7 @@ Extend `AbstractCrudController` and define the required metadata:
 ```php
 use App\Shared\Menu\Entity\Menu;
 use App\Shared\Menu\Form\MenuType;
-use Symkit\CrudBundle\Crud\Controller\AbstractCrudController;
+use Symkit\CrudBundle\Controller\AbstractCrudController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

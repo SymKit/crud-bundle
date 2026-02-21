@@ -6,8 +6,8 @@ namespace Symkit\CrudBundle\Tests\Unit\Crud\Component;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use PHPUnit\Framework\TestCase;
+use Symkit\CrudBundle\Component\CrudList;
 use Symkit\CrudBundle\Contract\CrudListProviderInterface;
-use Symkit\CrudBundle\Crud\Component\CrudList;
 
 final class CrudListTest extends TestCase
 {

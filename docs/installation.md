@@ -9,7 +9,7 @@
    ```php
    return [
        // ...
-       Symkit\CrudBundle\CrudBundle::class => ['all' => true],
+       Symkit\CrudBundleBundle::class => ['all' => true],
        Symkit\FormBundle\FormBundle::class => ['all' => true], # Required dependency
    ];
    ```

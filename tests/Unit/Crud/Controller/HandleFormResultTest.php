@@ -7,7 +7,7 @@ namespace Symkit\CrudBundle\Tests\Unit\Crud\Controller;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Response;
-use Symkit\CrudBundle\Crud\Controller\HandleFormResult;
+use Symkit\CrudBundle\Controller\HandleFormResult;
 
 final class HandleFormResultTest extends TestCase
 {
