@@ -9,23 +9,8 @@ The bundle can be configured under `symkit_crud` in your application config (e.g
 | `crud.enabled` | `true` | CRUD persistence layer (provider, persistence manager, Doctrine handler). |
 | `list.enabled` | `true` | List system (CrudList and CrudFilters Live components). |
 | `list.default_page_size` | `25` | Default number of items per page in CrudList. |
-| `form_types.slug` | `true` | SlugType and Slug Twig component. |
-| `form_types.sitemap_priority` | `true` | SitemapPriorityType. |
-| `form_types.icon_picker` | `true` | IconPickerType. |
-| `form_types.active_inactive` | `true` | ActiveInactiveType. |
-| `form_types.form_section` | `true` | FormSectionType for card-style sections in sectioned forms. |
-| `form_extensions.rich_select` | `true` | RichSelect form extension and component. |
-| `form_extensions.password` | `true` | Password form extension and PasswordField component. |
-| `form_extensions.translatable` | `true` | Translatable form extension and TranslatableField component. |
-| `form_extensions.url` | `true` | URL form extension. |
-| `form_extensions.dependency` | `true` | Dependency (dependent fields) extension. |
-| `form_extensions.checkbox_rich_select` | `true` | CheckboxRichSelect extension. |
 | `components.back_link` | `true` | BackLink Twig component. |
 | `components.delete_form` | `true` | DeleteForm Twig component. |
-| `components.slug` | `true` | Slug Live component. |
-| `components.rich_select` | `true` | RichSelect Live component. |
-| `components.password_field` | `true` | PasswordField Live component. |
-| `components.translatable_field` | `true` | TranslatableField Live component. |
 | `components.crud_list` | `true` | CrudList Live component. |
 | `components.crud_filters` | `true` | CrudFilters Live component. |
 | `twig_prepend` | `true` | Prepend Twig paths and component namespace. |
@@ -33,15 +18,13 @@ The bundle can be configured under `symkit_crud` in your application config (e.g
 
 ## Example
 
-Disable the list system and the slug form type:
+Disable the list system:
 
 ```yaml
 # config/packages/symkit_crud.yaml
 symkit_crud:
   list:
     enabled: false
-  form_types:
-    slug: false
 ```
 
 When a feature is disabled, its services and tags are not registered; your application will not load them.

@@ -48,4 +48,4 @@ A hidden form component for delete actions with CSRF protection and confirmation
 ## Customization
 
 You can override the default component template in your application:
-`templates/bundles/SymkitCrud/components/RichSelect.html.twig`
+`templates/bundles/SymkitCrud/components/BackLink.html.twig`

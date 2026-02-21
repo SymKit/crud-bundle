@@ -1,6 +1,6 @@
 {
     "name": "symkit/crud-bundle",
-    "description": "Symfony bundle for CRUD, Live lists (filters, sort, pagination), form types and extensions, Twig components (RichSelect, Slug, Password, Translatable, BackLink, DeleteForm, CrudList, CrudFilters), Tailwind theme and Stimulus",
+    "description": "Symfony bundle for generic CRUD, Live lists (filters, sort, pagination), Twig components (BackLink, DeleteForm, CrudList, CrudFilters) and Stimulus",
     "type": "symfony-bundle",
     "license": "MIT",
     "autoload": {
@@ -11,6 +11,7 @@
     "require": {
         "php": ">=8.2",
         "doctrine/orm": "^3.6",
+        "symkit/form-bundle": "^0.0.1",
         "symkit/metadata-bundle": "^0.0.1",
         "symfony/framework-bundle": "^7.0 || ^8.0",
         "symfony/form": "^7.0 || ^8.0",
@@ -39,7 +40,11 @@
     },
     "extra": {
         "bundle-ai-kit": {
-            "editors": ["cursor", "claude", "antigravity"],
+            "editors": [
+                "cursor",
+                "claude",
+                "antigravity"
+            ],
             "skills": [
                 "symfony-bundle-core",
                 "symfony-bundle-ux",

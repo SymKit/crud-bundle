@@ -3,14 +3,6 @@
     <file source-language="en" target-language="fr" datatype="plaintext" original="SymkitCrud" date="2026-02-21T00:00:00Z">
         <header/>
         <body>
-            <trans-unit id="yes" resname="Yes">
-                <source>Yes</source>
-                <target>Oui</target>
-            </trans-unit>
-            <trans-unit id="no" resname="No">
-                <source>No</source>
-                <target>Non</target>
-            </trans-unit>
             <trans-unit id="dash" resname="-">
                 <source>-</source>
                 <target>-</target>
@@ -85,22 +77,6 @@
                 <source>crud.component.delete_form.confirm</source>
                 <target>Êtes-vous sûr de vouloir supprimer cet élément ?</target>
             </trans-unit>
-            <trans-unit id="crud.component.rich_select.placeholder" resname="crud.component.rich_select.placeholder">
-                <source>crud.component.rich_select.placeholder</source>
-                <target>Sélectionner une option...</target>
-            </trans-unit>
-            <trans-unit id="crud.component.rich_select.search_placeholder" resname="crud.component.rich_select.search_placeholder">
-                <source>crud.component.rich_select.search_placeholder</source>
-                <target>Rechercher...</target>
-            </trans-unit>
-            <trans-unit id="crud.component.checkbox_rich_select.placeholder" resname="crud.component.checkbox_rich_select.placeholder">
-                <source>crud.component.checkbox_rich_select.placeholder</source>
-                <target>Sélectionner...</target>
-            </trans-unit>
-            <trans-unit id="crud.component.password_field.placeholder" resname="crud.component.password_field.placeholder">
-                <source>crud.component.password_field.placeholder</source>
-                <target>Saisir un mot de passe...</target>
-            </trans-unit>
             <trans-unit id="crud.component.filters.search_placeholder" resname="crud.component.filters.search_placeholder">
                 <source>crud.component.filters.search_placeholder</source>
                 <target>Rechercher...</target>
@@ -122,30 +98,6 @@
             <trans-unit id="crud.show.section.general.description" resname="crud.show.section.general.description">
                 <source>crud.show.section.general.description</source>
                 <target>Consultez les détails complets de cet enregistrement.</target>
-            </trans-unit>
-
-            <!-- Password rules -->
-            <trans-unit id="crud.password.rule.length" resname="crud.password.rule.length">
-                <source>crud.password.rule.length</source>
-                <target>Au moins %min% caractères</target>
-            </trans-unit>
-            <trans-unit id="crud.password.rule.uppercase" resname="crud.password.rule.uppercase">
-                <source>crud.password.rule.uppercase</source>
-                <target>Une lettre majuscule</target>
-            </trans-unit>
-            <trans-unit id="crud.password.rule.number" resname="crud.password.rule.number">
-                <source>crud.password.rule.number</source>
-                <target>Un chiffre</target>
-            </trans-unit>
-            <trans-unit id="crud.password.rule.special" resname="crud.password.rule.special">
-                <source>crud.password.rule.special</source>
-                <target>Un caractère spécial</target>
-            </trans-unit>
-
-            <!-- Table of contents (JS) -->
-            <trans-unit id="crud.toc.title" resname="crud.toc.title">
-                <source>crud.toc.title</source>
-                <target>Sur cette page</target>
             </trans-unit>
         </body>
     </file>

@@ -3,14 +3,6 @@
     <file source-language="en" target-language="en" datatype="plaintext" original="SymkitCrud" date="2026-02-21T00:00:00Z">
         <header/>
         <body>
-            <trans-unit id="yes" resname="Yes">
-                <source>Yes</source>
-                <target>Yes</target>
-            </trans-unit>
-            <trans-unit id="no" resname="No">
-                <source>No</source>
-                <target>No</target>
-            </trans-unit>
             <trans-unit id="dash" resname="-">
                 <source>-</source>
                 <target>-</target>
@@ -85,22 +77,6 @@
                 <source>crud.component.delete_form.confirm</source>
                 <target>Are you sure you want to delete this item?</target>
             </trans-unit>
-            <trans-unit id="crud.component.rich_select.placeholder" resname="crud.component.rich_select.placeholder">
-                <source>crud.component.rich_select.placeholder</source>
-                <target>Select an option...</target>
-            </trans-unit>
-            <trans-unit id="crud.component.rich_select.search_placeholder" resname="crud.component.rich_select.search_placeholder">
-                <source>crud.component.rich_select.search_placeholder</source>
-                <target>Search...</target>
-            </trans-unit>
-            <trans-unit id="crud.component.checkbox_rich_select.placeholder" resname="crud.component.checkbox_rich_select.placeholder">
-                <source>crud.component.checkbox_rich_select.placeholder</source>
-                <target>Select...</target>
-            </trans-unit>
-            <trans-unit id="crud.component.password_field.placeholder" resname="crud.component.password_field.placeholder">
-                <source>crud.component.password_field.placeholder</source>
-                <target>Enter password...</target>
-            </trans-unit>
             <trans-unit id="crud.component.filters.search_placeholder" resname="crud.component.filters.search_placeholder">
                 <source>crud.component.filters.search_placeholder</source>
                 <target>Search...</target>
@@ -122,30 +98,6 @@
             <trans-unit id="crud.show.section.general.description" resname="crud.show.section.general.description">
                 <source>crud.show.section.general.description</source>
                 <target>View the complete details of this record.</target>
-            </trans-unit>
-
-            <!-- Password rules -->
-            <trans-unit id="crud.password.rule.length" resname="crud.password.rule.length">
-                <source>crud.password.rule.length</source>
-                <target>At least %min% characters</target>
-            </trans-unit>
-            <trans-unit id="crud.password.rule.uppercase" resname="crud.password.rule.uppercase">
-                <source>crud.password.rule.uppercase</source>
-                <target>One uppercase letter</target>
-            </trans-unit>
-            <trans-unit id="crud.password.rule.number" resname="crud.password.rule.number">
-                <source>crud.password.rule.number</source>
-                <target>One number</target>
-            </trans-unit>
-            <trans-unit id="crud.password.rule.special" resname="crud.password.rule.special">
-                <source>crud.password.rule.special</source>
-                <target>One special character</target>
-            </trans-unit>
-
-            <!-- Table of contents (JS) -->
-            <trans-unit id="crud.toc.title" resname="crud.toc.title">
-                <source>crud.toc.title</source>
-                <target>On this page</target>
             </trans-unit>
         </body>
     </file>
