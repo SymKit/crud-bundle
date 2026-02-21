@@ -2,8 +2,9 @@
 
 Powerful, event-driven CRUD and Live List system for Symfony.
 
-[![Latest Version](https://img.shields.io/packagist/v/symkit/crud-bundle.svg?style=flat-square)](https://packagist.org/packages/symkit/crud-bundle)
-[![Total Downloads](https://img.shields.io/packagist/dt/symkit/crud-bundle.svg?style=flat-square)](https://packagist.org/packages/symkit/crud-bundle)
+[![CI](https://github.com/symkit/crud-bundle/actions/workflows/ci.yml/badge.svg)](https://github.com/symkit/crud-bundle/actions)
+[![Latest Version](https://img.shields.io/packagist/v/symkit/crud-bundle.svg)](https://packagist.org/packages/symkit/crud-bundle)
+[![PHPStan Level 9](https://img.shields.io/badge/PHPStan-level%209-brightgreen.svg)](https://phpstan.org/)
 
 ---
 
