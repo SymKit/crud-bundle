@@ -20,6 +20,7 @@ final class SitemapPriorityType extends AbstractType
         ]);
     }
 
+    /** @return array<string, float> */
     private function getPriorityChoices(): array
     {
         $choices = [];

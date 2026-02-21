@@ -33,27 +33,32 @@ final class CrudListProvider implements CrudListProviderInterface
         int $page,
         int $limit,
     ): Paginator {
+        /** @var class-string<object> $entityClass */
         $qb = $this->entityManager->getRepository($entityClass)->createQueryBuilder('e');
 
         $this->eventDispatcher->dispatch(new CrudListQueryEvent($qb, $entityClass, $filters), CrudEvents::LIST_QUERY);
 
-        $query = $filters['q'] ?? null;
+        $searchValue = $filters['q'] ?? null;
 
-        if ($query && !empty($searchFields)) {
+        if ($searchValue && !empty($searchFields)) {
+            /** @var string $searchString */
+            $searchString = \is_string($searchValue) ? $searchValue : '';
+
             $orX = $qb->expr()->orX();
             foreach ($searchFields as $field) {
                 $orX->add($qb->expr()->like("e.{$field}", ':query'));
             }
-            $qb->andWhere($orX)->setParameter('query', '%'.$query.'%');
+            $qb->andWhere($orX)->setParameter('query', '%'.$searchString.'%');
         }
 
         if ($sortBy) {
             $qb->orderBy('e.'.$sortBy, $sortDirection);
         }
 
-        $query = $qb->getQuery();
+        $dqlQuery = $qb->getQuery();
 
-        $paginator = new Paginator($query);
+        /** @var Paginator<object> $paginator */
+        $paginator = new Paginator($dqlQuery);
         $paginator->getQuery()
             ->setFirstResult($limit * ($page - 1))
             ->setMaxResults($limit)

@@ -38,26 +38,35 @@ class SlugType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars['target'] = $options['target'];
+        /** @var string $target */
+        $target = $options['target'];
+
+        $view->vars['target'] = $target;
         $view->vars['locked'] = $options['locked'];
         $view->vars['unique'] = $options['unique'];
         $view->vars['entity_class'] = $options['entity_class'];
         $view->vars['slug_field'] = $options['slug_field'];
         $view->vars['repository_method'] = $options['repository_method'];
-        $view->vars['entity_id'] = $form->getParent()?->getData()?->getId() ?? null;
+
+        $parentData = $form->getParent()?->getData();
+        $view->vars['entity_id'] = (\is_object($parentData) && method_exists($parentData, 'getId')) ? $parentData->getId() : null;
+
         $view->vars['target_value'] = null;
-        if ($options['target'] && $form->getParent() && $form->getParent()->has($options['target'])) {
-            $view->vars['target_value'] = $form->getParent()->get($options['target'])->getData();
+        if ($target && $form->getParent() && $form->getParent()->has($target)) {
+            $view->vars['target_value'] = $form->getParent()->get($target)->getData();
         }
     }
 
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
-        if ($options['target']) {
-            if (isset($view->parent->children[$options['target']])) {
-                $view->vars['target_id'] = $view->parent->children[$options['target']]->vars['id'];
+        /** @var string $target */
+        $target = $options['target'];
+
+        if ($target) {
+            if (isset($view->parent->children[$target])) {
+                $view->vars['target_id'] = $view->parent->children[$target]->vars['id'];
             } else {
-                throw new \InvalidArgumentException(\sprintf('The field "%s" targets "%s", but that field was not found in the parent form. Check your form definition.', $form->getName(), $options['target']));
+                throw new \InvalidArgumentException(\sprintf('The field "%s" targets "%s", but that field was not found in the parent form. Check your form definition.', $form->getName(), $target));
             }
         }
     }

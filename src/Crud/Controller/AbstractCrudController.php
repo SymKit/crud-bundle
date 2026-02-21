@@ -124,10 +124,33 @@ abstract class AbstractCrudController extends AbstractController
         return [];
     }
 
+    protected function getEntityId(object $entity): string|int
+    {
+        if (!method_exists($entity, 'getId')) {
+            throw new \LogicException(\sprintf('Entity of class "%s" must implement a getId() method. Override getEntityId() to customize.', $entity::class));
+        }
+
+        return $entity->getId();
+    }
+
+    protected function getEntityLabel(object $entity): string
+    {
+        if ($entity instanceof \Stringable) {
+            return (string) $entity;
+        }
+
+        return $entity::class.'#'.$this->getEntityId($entity);
+    }
+
     /** @param array<string, mixed> $options */
     protected function renderIndex(Request $request, array $options = []): Response
     {
-        return $this->render($options['template'] ?? $this->getIndexTemplate(), array_merge([
+        /** @var string $template */
+        $template = $options['template'] ?? $this->getIndexTemplate();
+        /** @var array<string, mixed> $templateVars */
+        $templateVars = $options['template_vars'] ?? [];
+
+        return $this->render($template, array_merge([
             'page_title' => $options['page_title'] ?? $this->getIndexPageTitle(),
             'page_description' => $options['page_description'] ?? $this->getIndexPageDescription(),
             'base_layout' => $this->getBaseLayout(),
@@ -136,22 +159,22 @@ abstract class AbstractCrudController extends AbstractController
             'list_fields' => $this->configureListFields(),
             'create_route' => $options['create_route'] ?? $this->getRoutePrefix().'_create',
             'create_label' => $options['create_label'] ?? $this->getCreateLabel(),
-        ], $options['template_vars'] ?? []));
+        ], $templateVars));
     }
 
     protected function getCreateSuccessMessage(object $entity): TranslatableMessage
     {
-        return new TranslatableMessage('crud.success.created', ['%entity%' => (string) $entity], 'SymkitCrud');
+        return new TranslatableMessage('crud.success.created', ['%entity%' => $this->getEntityLabel($entity)], 'SymkitCrud');
     }
 
     protected function getUpdateSuccessMessage(object $entity): TranslatableMessage
     {
-        return new TranslatableMessage('crud.success.updated', ['%entity%' => (string) $entity], 'SymkitCrud');
+        return new TranslatableMessage('crud.success.updated', ['%entity%' => $this->getEntityLabel($entity)], 'SymkitCrud');
     }
 
     protected function getDeleteSuccessMessage(object $entity): TranslatableMessage
     {
-        return new TranslatableMessage('crud.success.deleted', ['%entity%' => (string) $entity], 'SymkitCrud');
+        return new TranslatableMessage('crud.success.deleted', ['%entity%' => $this->getEntityLabel($entity)], 'SymkitCrud');
     }
 
     protected function getInvalidCsrfMessage(): TranslatableMessage
@@ -170,13 +193,20 @@ abstract class AbstractCrudController extends AbstractController
 
             $this->addFlash('success', $this->getCreateSuccessMessage($entity));
 
+            /** @var string $redirectRoute */
             $redirectRoute = $options['redirect_route'] ?? $this->getRoutePrefix().'_list';
+            /** @var array<string, mixed> $redirectParams */
             $redirectParams = $options['redirect_params'] ?? [];
 
             return $this->redirectToRoute($redirectRoute, $redirectParams);
         }
 
-        return $this->render($options['template'] ?? $this->getNewTemplate(), array_merge([
+        /** @var string $template */
+        $template = $options['template'] ?? $this->getNewTemplate();
+        /** @var array<string, mixed> $templateVars */
+        $templateVars = $options['template_vars'] ?? [];
+
+        return $this->render($template, array_merge([
             'form' => $form->createView(),
             'base_layout' => $this->getBaseLayout(),
             'back_route' => $this->getRoutePrefix().'_list',
@@ -185,7 +215,7 @@ abstract class AbstractCrudController extends AbstractController
             'page_description' => $options['page_description'] ?? '',
             'after_form_template' => $options['after_form_template'] ?? null,
             'extra_nav_items_template' => $options['extra_nav_items_template'] ?? null,
-        ], $options['template_vars'] ?? []));
+        ], $templateVars));
     }
 
     /** @param array<string, mixed> $options */
@@ -199,32 +229,46 @@ abstract class AbstractCrudController extends AbstractController
 
             $this->addFlash('success', $this->getUpdateSuccessMessage($entity));
 
+            /** @var string $redirectRoute */
             $redirectRoute = $options['redirect_route'] ?? $this->getRoutePrefix().'_list';
+            /** @var array<string, mixed> $redirectParams */
             $redirectParams = $options['redirect_params'] ?? [];
 
             return $this->redirectToRoute($redirectRoute, $redirectParams);
         }
 
-        return $this->render($options['template'] ?? $this->getEditTemplate(), array_merge([
+        $entityId = $this->getEntityId($entity);
+
+        /** @var string $template */
+        $template = $options['template'] ?? $this->getEditTemplate();
+        /** @var array<string, mixed> $templateVars */
+        $templateVars = $options['template_vars'] ?? [];
+
+        return $this->render($template, array_merge([
             'form' => $form->createView(),
             'base_layout' => $this->getBaseLayout(),
             'back_route' => $options['back_route'] ?? $this->getRoutePrefix().'_list',
             'show_back' => $options['show_back'] ?? true,
             'show_delete' => $options['show_delete'] ?? true,
             'delete_route' => $options['delete_route'] ?? $this->getRoutePrefix().'_delete',
-            'delete_route_params' => $options['delete_route_params'] ?? ['id' => $entity->getId()],
-            'entity_id' => $entity->getId(),
+            'delete_route_params' => $options['delete_route_params'] ?? ['id' => $entityId],
+            'entity_id' => $entityId,
             'page_title' => $options['page_title'] ?? 'Edit Item',
             'page_description' => $options['page_description'] ?? '',
             'after_form_template' => $options['after_form_template'] ?? null,
             'extra_nav_items_template' => $options['extra_nav_items_template'] ?? null,
-        ], $options['template_vars'] ?? []));
+        ], $templateVars));
     }
 
     /** @param array<string, mixed> $options */
     protected function renderShow(object $entity, array $options = []): Response
     {
-        return $this->render($options['template'] ?? $this->getShowTemplate(), array_merge([
+        /** @var string $template */
+        $template = $options['template'] ?? $this->getShowTemplate();
+        /** @var array<string, mixed> $templateVars */
+        $templateVars = $options['template_vars'] ?? [];
+
+        return $this->render($template, array_merge([
             'entity' => $entity,
             'base_layout' => $this->getBaseLayout(),
             'back_route' => $options['back_route'] ?? $this->getRoutePrefix().'_list',
@@ -232,13 +276,14 @@ abstract class AbstractCrudController extends AbstractController
             'page_title' => $options['page_title'] ?? 'View Details',
             'page_description' => $options['page_description'] ?? '',
             'show_sections' => $options['show_sections'] ?? $this->configureShowSections(),
-        ], $options['template_vars'] ?? []));
+        ], $templateVars));
     }
 
     protected function performDelete(object $entity, Request $request): Response
     {
+        $entityId = $this->getEntityId($entity);
         $token = $request->request->get('_token_delete');
-        if (null !== $token && '' !== $token && $this->isCsrfTokenValid('delete'.$entity->getId(), (string) $token)) {
+        if (null !== $token && '' !== $token && $this->isCsrfTokenValid('delete'.$entityId, (string) $token)) {
             $this->persistenceManager->delete($entity, $request);
 
             $this->addFlash('success', $this->getDeleteSuccessMessage($entity));

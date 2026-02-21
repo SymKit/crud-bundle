@@ -13,9 +13,11 @@ final class TranslatableField
 {
     use DefaultActionTrait;
 
+    /** @var array<string, string> */
     #[LiveProp(writable: true)]
     public array $translations = [];
 
+    /** @var list<string> */
     #[LiveProp]
     public array $locales = ['fr', 'en'];
 
@@ -31,10 +33,13 @@ final class TranslatableField
     #[LiveProp]
     public string $placeholder = '';
 
+    /** @param list<string> $locales */
     public function mount(array $locales = ['fr', 'en'], mixed $translations = null, ?string $activeLocale = null): void
     {
         $this->locales = $locales;
-        $this->translations = \is_array($translations) ? $translations : [];
+        /** @var array<string, string> $translationData */
+        $translationData = \is_array($translations) ? $translations : [];
+        $this->translations = $translationData;
 
         // Ensure all locales have a value (even empty)
         foreach ($this->locales as $locale) {

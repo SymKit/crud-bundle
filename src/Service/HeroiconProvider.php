@@ -280,6 +280,7 @@ final class HeroiconProvider
         'x-mark',
     ];
 
+    /** @return array<string, string> */
     public function getAllIcons(?string $style = '20-solid'): array
     {
         $icons = [];
