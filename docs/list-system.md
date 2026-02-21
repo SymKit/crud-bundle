@@ -61,6 +61,13 @@ Displays the `|length` of an iterable property.
 Standard action links for the list row.
 - **Option `edit_route`**: The route name for editing (e.g., `admin_product_edit`). The `id` is passed automatically.
 
+### Status Badge (`@SymkitCrud/crud/field/status_badge.html.twig`)
+Automatically displays a colored badge (Green, Yellow, Red) based on common states like `published`, `draft`, `inactive`, etc.
+
+### Enum (`@SymkitCrud/crud/field/enum.html.twig`)
+Displays a backed enum value as a badge with customizable mapping.
+- **Option `map`**: A dictionary mapping enum values to badge types (`success`, `warning`, `danger`, `info`, `default`).
+
 ## 2. Data Provider (Read side)
 
 The list system is decoupled from the storage layer via the `CrudListProviderInterface`. 

@@ -1,25 +1,68 @@
 # Symkit CRUD Bundle
 
-Symfony bundle for modern applications: generic CRUD, Live lists (filters, sort, pagination), Twig components (BackLink, DeleteForm, CrudList, CrudFilters) and Stimulus.
+Powerful, event-driven CRUD and Live List system for Symfony.
 
-Part of [SymKit](https://github.com/symkit). For form types, extensions, and Tailwind form theme, use [symkit/form-bundle](https://packagist.org/packages/symkit/form-bundle). For SEO and breadcrumbs, use [symkit/metadata-bundle](https://packagist.org/packages/symkit/metadata-bundle) with `AbstractCrudController`.
+[![Latest Version](https://img.shields.io/packagist/v/symkit/crud-bundle.svg?style=flat-square)](https://packagist.org/packages/symkit/crud-bundle)
+[![Total Downloads](https://img.shields.io/packagist/dt/symkit/crud-bundle.svg?style=flat-square)](https://packagist.org/packages/symkit/crud-bundle)
 
-## Features
+---
 
-- **Generic CRUD**: event-driven persistence layer, CQRS-lite.
-- **Live lists**: CrudList and CrudFilters (filters, sort, pagination).
-- **Twig components**: BackLink, DeleteForm, CrudList, CrudFilters.
+**Symkit CRUD** simplifies administration and data management by providing a flexible persistence layer and modern interactive list components.
 
-## Documentation
+## 🚀 Quick Start in 60 Seconds
 
-1. [**Installation**](docs/installation.md)
-2. [**Configuration**](docs/configuration.md) — enable/disable features
-3. [**CRUD system**](docs/crud-system.md)
-4. [**List system**](docs/list-system.md)
-5. [**Utility components**](docs/utility-components.md)
+### 1. Install
 
-## Contributing
+```bash
+composer require symkit/crud-bundle
+```
 
-- Install Git hooks (optional, to strip `Co-authored-by:` from commit messages): `make install-hooks`
-- Quality: `make quality` (cs-check, phpstan, deptrac, tests)
-- Run before committing: `make cs-fix`, `make phpstan`, `make test`
+### 2. Create your Controller
+
+Extend `AbstractCrudController` and let the magic happen:
+
+```php
+#[Route('/admin/products')]
+final class ProductController extends AbstractCrudController
+{
+    protected function getEntityClass(): string => Product::class;
+    protected function getFormClass(): string => ProductType::class;
+    protected function getRoutePrefix(): string => 'admin_product';
+
+    #[Route('/', name: 'admin_product_list')]
+    public function index(Request $request): Response => $this->renderIndex($request);
+}
+```
+
+### 3. Display your List
+
+That's it! You now have a full-featured list with **pagination**, **sorting**, and **real-time search** powered by Symfony UX Live Components.
+
+---
+
+## 📖 Explore the Documentation
+
+*   [**Installation Guide**](docs/installation.md) — Get up and running.
+*   [**Configuration**](docs/configuration.md) — Customize features and defaults.
+*   [**CRUD System**](docs/crud-system.md) — Mastering controllers, events, and persistence.
+*   [**List System**](docs/list-system.md) — Live filters, custom fields, and search.
+*   [**Utility Components**](docs/utility-components.md) — Back links, delete forms, and more.
+
+---
+
+## 🛠 Related Packages
+
+*   [**symkit/form-bundle**](https://github.com/symkit/form-bundle) — Rich form types and Tailwind theme. (Required)
+*   [**symkit/metadata-bundle**](https://github.com/symkit/metadata-bundle) — SEO and breadcrumbs integration. (Required)
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! 
+
+1. Quality Check: `make quality`
+2. Run Tests: `make test`
+3. Fix CS: `make cs-fix`
+
+*Symkit is a collection of modern Symfony bundles built for developer productivity.*

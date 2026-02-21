@@ -139,11 +139,18 @@ This allows you to customize the storage implementation (e.g., Use an API instea
 **Example Subscriber:**
 
 ```php
+use Symkit\CrudBundle\Enum\CrudEvents;
+use Symkit\CrudBundle\Event\CrudEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 final class MenuSubscriber implements EventSubscriberInterface
 {
-    public static function getSubscribedEvents(): array => [
-        CrudEvents::PRE_PERSIST->value => 'onPrePersist',
-    ];
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            CrudEvents::PRE_PERSIST->value => 'onPrePersist',
+        ];
+    }
 
     public function onPrePersist(CrudEvent $event): void
     {
@@ -184,8 +191,10 @@ protected function getInvalidCsrfMessage(): TranslatableMessage
 ```
 
 ## 5. Metadata & Breadcrumbs
-
-`AbstractCrudController` uses [symkit/metadata-bundle](https://packagist.org/packages/symkit/metadata-bundle) when installed: it injects `Symkit\MetadataBundle\Contract\PageContextBuilderInterface` so that the page context (title, description, breadcrumbs) can be built from your actions. Use the `#[Seo]` and `#[Breadcrumb]` attributes on your controller actions to define title, description and breadcrumb items; the controller will integrate with the builder so that templates receive the correct metadata.
+ 
+`AbstractCrudController` integrates with [symkit/metadata-bundle](https://packagist.org/packages/symkit/metadata-bundle) (required dependency). It uses the `PageContextBuilderInterface` to build the page context (title, description, breadcrumbs) from your actions.
+ 
+Use the `#[Seo]` and `#[Breadcrumb]` attributes on your controller actions to define title, description and breadcrumb items. The controller will automatically resolve these and update the page context.
 
 ## 6. Translation Support
 

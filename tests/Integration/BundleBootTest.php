@@ -8,6 +8,7 @@ use Nyholm\BundleTest\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symkit\CrudBundle\CrudBundle;
 
 final class BundleBootTest extends KernelTestCase
 {
