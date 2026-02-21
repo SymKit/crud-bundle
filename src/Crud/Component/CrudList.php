@@ -75,6 +75,10 @@ final class CrudList
     /** @return Paginator<object> */
     public function getEntities(): Paginator
     {
+        if (!\in_array(strtoupper($this->sortDirection), ['ASC', 'DESC'], true)) {
+            $this->sortDirection = 'asc';
+        }
+
         if (!$this->sortBy) {
             foreach ($this->listFields as $field => $config) {
                 if ($config['sortable'] ?? false) {

@@ -16,6 +16,8 @@ final class Slug
 {
     use DefaultActionTrait;
 
+    private const MAX_UNIQUENESS_ATTEMPTS = 100;
+
     #[LiveProp(writable: true, onUpdated: 'onValueUpdated')]
     public ?string $value = null;
 
@@ -151,6 +153,10 @@ final class Slug
         $counter = 1;
 
         while (true) {
+            if ($counter > self::MAX_UNIQUENESS_ATTEMPTS) {
+                throw new \RuntimeException(\sprintf('Unable to generate a unique slug after %d attempts for "%s".', self::MAX_UNIQUENESS_ATTEMPTS, $originalSlug));
+            }
+
             $qb = $repository->createQueryBuilder('e')
                 ->select('count(e.id)')
                 ->where(\sprintf('e.%s = :slug', $this->slugField))

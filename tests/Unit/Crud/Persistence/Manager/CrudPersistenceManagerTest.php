@@ -46,10 +46,10 @@ final class CrudPersistenceManagerTest extends TestCase
         $manager->persist($entity, $form, $request);
 
         self::assertSame([
-            CrudEvents::PRE_PERSIST,
+            CrudEvents::PRE_PERSIST->value,
             'persist',
             'flush',
-            CrudEvents::POST_PERSIST,
+            CrudEvents::POST_PERSIST->value,
         ], $callOrder);
     }
 
@@ -104,10 +104,10 @@ final class CrudPersistenceManagerTest extends TestCase
         $manager->update($entity, $form, $request);
 
         self::assertSame([
-            CrudEvents::PRE_UPDATE,
+            CrudEvents::PRE_UPDATE->value,
             'update',
             'flush',
-            CrudEvents::POST_UPDATE,
+            CrudEvents::POST_UPDATE->value,
         ], $callOrder);
     }
 
@@ -141,10 +141,10 @@ final class CrudPersistenceManagerTest extends TestCase
         $manager->delete($entity, $request);
 
         self::assertSame([
-            CrudEvents::PRE_DELETE,
+            CrudEvents::PRE_DELETE->value,
             'delete',
             'flush',
-            CrudEvents::POST_DELETE,
+            CrudEvents::POST_DELETE->value,
         ], $callOrder);
     }
 

@@ -199,4 +199,31 @@ final class CrudListTest extends TestCase
         self::assertNull($component->sortBy);
         self::assertSame('asc', $component->sortDirection);
     }
+
+    public function testGetEntitiesNormalizesInvalidSortDirection(): void
+    {
+        $paginator = $this->createMock(Paginator::class);
+        $provider = $this->createMock(CrudListProviderInterface::class);
+        $provider->expects(self::once())
+            ->method('getEntities')
+            ->with(
+                self::anything(),
+                self::anything(),
+                self::anything(),
+                self::anything(),
+                'asc',
+                self::anything(),
+                self::anything(),
+            )
+            ->willReturn($paginator);
+
+        $component = new CrudList($provider);
+        $component->entityClass = 'App\\Entity\\Post';
+        $component->sortDirection = 'INVALID';
+        $component->listFields = ['title' => ['sortable' => true]];
+
+        $component->getEntities();
+
+        self::assertSame('asc', $component->sortDirection);
+    }
 }

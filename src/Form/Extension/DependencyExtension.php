@@ -33,7 +33,7 @@ final class DependencyExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if ($form->isRoot()) {
-            $view->vars['attr']['data-controller'] = mb_trim(($view->vars['attr']['data-controller'] ?? '').' crud--dependency');
+            $view->vars['attr']['data-controller'] = trim(($view->vars['attr']['data-controller'] ?? '').' crud--dependency');
         }
 
         if (null === $options['dependency_group']) {

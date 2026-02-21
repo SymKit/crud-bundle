@@ -36,7 +36,7 @@ final class CrudListProvider implements CrudListProviderInterface
         /** @var class-string<object> $entityClass */
         $qb = $this->entityManager->getRepository($entityClass)->createQueryBuilder('e');
 
-        $this->eventDispatcher->dispatch(new CrudListQueryEvent($qb, $entityClass, $filters), CrudEvents::LIST_QUERY);
+        $this->eventDispatcher->dispatch(new CrudListQueryEvent($qb, $entityClass, $filters), CrudEvents::LIST_QUERY->value);
 
         $searchValue = $filters['q'] ?? null;
 

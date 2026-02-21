@@ -42,7 +42,7 @@ final class CrudListProviderTest extends TestCase
             ->method('dispatch')
             ->with(
                 self::isInstanceOf(CrudListQueryEvent::class),
-                CrudEvents::LIST_QUERY,
+                CrudEvents::LIST_QUERY->value,
             );
 
         $provider = new CrudListProvider($entityManager, $dispatcher);
@@ -158,7 +158,7 @@ final class CrudListProviderTest extends TestCase
                     return 'App\\Entity\\Post' === $event->getEntityClass()
                         && ['status' => 'active'] === $event->getFilters();
                 }),
-                CrudEvents::LIST_QUERY,
+                CrudEvents::LIST_QUERY->value,
             );
 
         $provider = new CrudListProvider($entityManager, $dispatcher);

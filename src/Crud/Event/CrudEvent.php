@@ -8,6 +8,13 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
 
+/**
+ * Base event dispatched during CRUD lifecycle operations.
+ *
+ * This class is intentionally non-final so that consumers can extend it
+ * with domain-specific data (e.g. extra context, computed values) while
+ * reusing the same event listeners infrastructure.
+ */
 class CrudEvent extends Event
 {
     public function __construct(

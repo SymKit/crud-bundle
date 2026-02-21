@@ -115,8 +115,10 @@ protected function configureShowSections(): array
 
 Hook into any lifecycle point by listening to `CrudEvents`. This eliminates the need for basic Action classes.
 
-| Event | Constant | Timing |
-|-------|----------|--------|
+`CrudEvents` is a backed `string` enum. Use `->value` when subscribing to events:
+
+| Event | Case | Timing |
+|-------|------|--------|
 | **Pre Persist** | `CrudEvents::PRE_PERSIST` | Before `persist()` & `flush()` on new entities. |
 | **Post Persist** | `CrudEvents::POST_PERSIST` | After `flush()` on new entities. |
 | **Pre Update** | `CrudEvents::PRE_UPDATE` | Before `flush()` on existing entities. |
@@ -140,7 +142,7 @@ This allows you to customize the storage implementation (e.g., Use an API instea
 final class MenuSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array => [
-        CrudEvents::PRE_PERSIST => 'onPrePersist',
+        CrudEvents::PRE_PERSIST->value => 'onPrePersist',
     ];
 
     public function onPrePersist(CrudEvent $event): void

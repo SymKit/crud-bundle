@@ -94,6 +94,21 @@ abstract class AbstractCrudController extends AbstractController
         return new TranslatableMessage('crud.action.create', [], 'SymkitCrud');
     }
 
+    protected function getNewPageTitle(): TranslatableMessage
+    {
+        return new TranslatableMessage('crud.page.create_new', [], 'SymkitCrud');
+    }
+
+    protected function getEditPageTitle(): TranslatableMessage
+    {
+        return new TranslatableMessage('crud.page.edit_item', [], 'SymkitCrud');
+    }
+
+    protected function getShowPageTitle(): TranslatableMessage
+    {
+        return new TranslatableMessage('crud.page.view_details', [], 'SymkitCrud');
+    }
+
     /** @return array<string, array<string, mixed>> */
     protected function configureListFields(): array
     {
@@ -192,16 +207,29 @@ abstract class AbstractCrudController extends AbstractController
         return new TranslatableMessage('crud.error.invalid_csrf', [], 'SymkitCrud');
     }
 
-    /** @param array<string, mixed> $options */
-    protected function renderNew(object $entity, Request $request, array $options = []): Response
-    {
-        $form = $this->createForm($this->getFormClass(), $entity, $this->getNewFormOptions($entity));
+    /**
+     * @param array<string, mixed>            $formOptions
+     * @param \Closure(): TranslatableMessage $successMessage
+     * @param array<string, mixed>            $options
+     */
+    private function handleForm(
+        object $entity,
+        Request $request,
+        array $formOptions,
+        \Closure $successMessage,
+        array $options,
+    ): ?Response {
+        $form = $this->createForm($this->getFormClass(), $entity, $formOptions);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->persistenceManager->persist($entity, $form, $request);
+            if (isset($options['_persist'])) {
+                $this->persistenceManager->persist($entity, $form, $request);
+            } else {
+                $this->persistenceManager->update($entity, $form, $request);
+            }
 
-            $this->addFlash('success', $this->getCreateSuccessMessage($entity));
+            $this->addFlash('success', $successMessage());
 
             /** @var string $redirectRoute */
             $redirectRoute = $options['redirect_route'] ?? $this->getRoutePrefix().'_list';
@@ -211,13 +239,34 @@ abstract class AbstractCrudController extends AbstractController
             return $this->redirectToRoute($redirectRoute, $redirectParams);
         }
 
+        return null;
+    }
+
+    /** @param array<string, mixed> $options */
+    protected function renderNew(object $entity, Request $request, array $options = []): Response
+    {
+        $redirect = $this->handleForm(
+            $entity,
+            $request,
+            $this->getNewFormOptions($entity),
+            fn () => $this->getCreateSuccessMessage($entity),
+            array_merge($options, ['_persist' => true]),
+        );
+
+        if ($redirect) {
+            return $redirect;
+        }
+
+        $form = $this->createForm($this->getFormClass(), $entity, $this->getNewFormOptions($entity));
+        $form->handleRequest($request);
+
         /** @var string $template */
         $template = $options['template'] ?? $this->getNewTemplate();
         /** @var array<string, mixed> $templateVars */
         $templateVars = $options['template_vars'] ?? [];
 
         /** @var string|TranslatableMessage|null $title */
-        $title = $options['page_title'] ?? 'Create New';
+        $title = $options['page_title'] ?? $this->getNewPageTitle();
         /** @var string|TranslatableMessage|null $description */
         $description = $options['page_description'] ?? '';
 
@@ -240,21 +289,20 @@ abstract class AbstractCrudController extends AbstractController
     /** @param array<string, mixed> $options */
     protected function renderEdit(object $entity, Request $request, array $options = []): Response
     {
+        $redirect = $this->handleForm(
+            $entity,
+            $request,
+            $this->getEditFormOptions($entity),
+            fn () => $this->getUpdateSuccessMessage($entity),
+            $options,
+        );
+
+        if ($redirect) {
+            return $redirect;
+        }
+
         $form = $this->createForm($this->getFormClass(), $entity, $this->getEditFormOptions($entity));
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->persistenceManager->update($entity, $form, $request);
-
-            $this->addFlash('success', $this->getUpdateSuccessMessage($entity));
-
-            /** @var string $redirectRoute */
-            $redirectRoute = $options['redirect_route'] ?? $this->getRoutePrefix().'_list';
-            /** @var array<string, mixed> $redirectParams */
-            $redirectParams = $options['redirect_params'] ?? [];
-
-            return $this->redirectToRoute($redirectRoute, $redirectParams);
-        }
 
         $entityId = $this->getEntityId($entity);
 
@@ -264,7 +312,7 @@ abstract class AbstractCrudController extends AbstractController
         $templateVars = $options['template_vars'] ?? [];
 
         /** @var string|TranslatableMessage|null $title */
-        $title = $options['page_title'] ?? 'Edit Item';
+        $title = $options['page_title'] ?? $this->getEditPageTitle();
         /** @var string|TranslatableMessage|null $description */
         $description = $options['page_description'] ?? '';
 
@@ -297,7 +345,7 @@ abstract class AbstractCrudController extends AbstractController
         $templateVars = $options['template_vars'] ?? [];
 
         /** @var string|TranslatableMessage|null $title */
-        $title = $options['page_title'] ?? 'View Details';
+        $title = $options['page_title'] ?? $this->getShowPageTitle();
         /** @var string|TranslatableMessage|null $description */
         $description = $options['page_description'] ?? '';
 

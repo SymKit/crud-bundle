@@ -59,6 +59,18 @@
                 <source>crud.error.invalid_csrf</source>
                 <target>Invalid security token. Please try again.</target>
             </trans-unit>
+            <trans-unit id="crud.page.create_new" resname="crud.page.create_new">
+                <source>crud.page.create_new</source>
+                <target>Create New</target>
+            </trans-unit>
+            <trans-unit id="crud.page.edit_item" resname="crud.page.edit_item">
+                <source>crud.page.edit_item</source>
+                <target>Edit Item</target>
+            </trans-unit>
+            <trans-unit id="crud.page.view_details" resname="crud.page.view_details">
+                <source>crud.page.view_details</source>
+                <target>View Details</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

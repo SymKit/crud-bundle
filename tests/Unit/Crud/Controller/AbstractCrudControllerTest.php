@@ -291,7 +291,7 @@ final class AbstractCrudControllerTest extends TestCase
         $this->pageContextBuilder
             ->expects(self::once())
             ->method('setTitle')
-            ->with('Edit Item');
+            ->with('crud.page.edit_item (translated)');
 
         $this->pageContextBuilder
             ->expects(self::once())
@@ -309,7 +309,7 @@ final class AbstractCrudControllerTest extends TestCase
         $this->pageContextBuilder
             ->expects(self::once())
             ->method('setTitle')
-            ->with('View Details');
+            ->with('crud.page.view_details (translated)');
 
         $this->pageContextBuilder
             ->expects(self::once())
