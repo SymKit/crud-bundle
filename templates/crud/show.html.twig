@@ -8,7 +8,7 @@
         {{ component('BackLink', {
             route: back_route,
             routeParams: back_route_params|default({}),
-            label: back_label|default('Back')
+            label: back_label|default('crud.action.back'|trans({}, 'SymkitCrud'))
         }) }}
     {% endif %}
 {% endblock %}
@@ -27,7 +27,7 @@
     <nav class="hidden lg:block w-56 flex-shrink-0 lg:sticky lg:top-24">
         <div class="bg-white dark:bg-gray-800/50 rounded-lg shadow-sm border border-slate-200 dark:border-white/10 overflow-hidden">
             <div class="p-4 bg-slate-50 dark:bg-white/5 border-b border-slate-100 dark:border-white/5">
-                <h3 class="text-xs font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider">Navigation</h3>
+                <h3 class="text-xs font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider">{{ 'crud.show.nav_title'|trans({}, 'SymkitCrud') }}</h3>
             </div>
             <ul class="text-sm" data-crud--section-nav-target="navList">
                 {% for id, section in show_sections %}
@@ -116,7 +116,7 @@
              <a href="{{ path(back_route) }}" 
                 class="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-white dark:bg-gray-700 text-slate-900 dark:text-white text-sm font-medium border border-slate-200 dark:border-white/10 shadow-sm hover:bg-slate-50 dark:hover:bg-gray-600 transition-all cursor-pointer">
                 {{ ux_icon('heroicons:arrow-left-20-solid', {class: 'w-4 h-4'}) }}
-                {{ 'Retour'|trans }}
+                {{ 'crud.action.back'|trans({}, 'SymkitCrud') }}
             </a>
         </div>
     </div>

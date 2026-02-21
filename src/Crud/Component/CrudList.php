@@ -47,7 +47,9 @@ final class CrudList
 
     public function __construct(
         private readonly CrudListProviderInterface $entityProvider,
+        int $defaultPageSize = 25,
     ) {
+        $this->limit = $defaultPageSize;
     }
 
     /** @param array<string, mixed> $filters */

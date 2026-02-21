@@ -9,11 +9,16 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class CrudListQueryEvent extends Event
 {
-    /** @param array<string, mixed> $filters */
+    /**
+     * @param class-string         $entityClass
+     * @param array<string, mixed> $filters
+     * @param list<string>         $searchFields
+     */
     public function __construct(
         private readonly QueryBuilder $queryBuilder,
         private readonly string $entityClass,
         private readonly array $filters,
+        private readonly array $searchFields = [],
     ) {
     }
 
@@ -31,5 +36,11 @@ final class CrudListQueryEvent extends Event
     public function getFilters(): array
     {
         return $this->filters;
+    }
+
+    /** @return list<string> */
+    public function getSearchFields(): array
+    {
+        return $this->searchFields;
     }
 }

@@ -126,9 +126,9 @@ abstract class AbstractCrudController extends AbstractController
     {
         return [
             'general' => [
-                'label' => 'Details',
+                'label' => 'crud.show.section.general.label',
                 'icon' => 'heroicons:information-circle-20-solid',
-                'description' => 'View the complete details of this record.',
+                'description' => 'crud.show.section.general.description',
                 'fields' => $this->configureShowFields(),
             ],
         ];
@@ -218,9 +218,11 @@ abstract class AbstractCrudController extends AbstractController
         array $formOptions,
         \Closure $successMessage,
         array $options,
-    ): ?Response {
+    ): HandleFormResult {
         $form = $this->createForm($this->getFormClass(), $entity, $formOptions);
         $form->handleRequest($request);
+
+        $redirect = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
             if (isset($options['_persist'])) {
@@ -236,16 +238,16 @@ abstract class AbstractCrudController extends AbstractController
             /** @var array<string, mixed> $redirectParams */
             $redirectParams = $options['redirect_params'] ?? [];
 
-            return $this->redirectToRoute($redirectRoute, $redirectParams);
+            $redirect = $this->redirectToRoute($redirectRoute, $redirectParams);
         }
 
-        return null;
+        return new HandleFormResult($redirect, $form->createView());
     }
 
     /** @param array<string, mixed> $options */
     protected function renderNew(object $entity, Request $request, array $options = []): Response
     {
-        $redirect = $this->handleForm(
+        $result = $this->handleForm(
             $entity,
             $request,
             $this->getNewFormOptions($entity),
@@ -253,12 +255,12 @@ abstract class AbstractCrudController extends AbstractController
             array_merge($options, ['_persist' => true]),
         );
 
-        if ($redirect) {
+        if ($result->isRedirect()) {
+            /** @var Response $redirect */
+            $redirect = $result->redirect;
+
             return $redirect;
         }
-
-        $form = $this->createForm($this->getFormClass(), $entity, $this->getNewFormOptions($entity));
-        $form->handleRequest($request);
 
         /** @var string $template */
         $template = $options['template'] ?? $this->getNewTemplate();
@@ -275,7 +277,7 @@ abstract class AbstractCrudController extends AbstractController
             ->setDescription($this->resolveTranslatable($description));
 
         return $this->render($template, array_merge([
-            'form' => $form->createView(),
+            'form' => $result->formView,
             'base_layout' => $this->getBaseLayout(),
             'back_route' => $this->getRoutePrefix().'_list',
             'show_back' => true,
@@ -289,7 +291,7 @@ abstract class AbstractCrudController extends AbstractController
     /** @param array<string, mixed> $options */
     protected function renderEdit(object $entity, Request $request, array $options = []): Response
     {
-        $redirect = $this->handleForm(
+        $result = $this->handleForm(
             $entity,
             $request,
             $this->getEditFormOptions($entity),
@@ -297,12 +299,12 @@ abstract class AbstractCrudController extends AbstractController
             $options,
         );
 
-        if ($redirect) {
+        if ($result->isRedirect()) {
+            /** @var Response $redirect */
+            $redirect = $result->redirect;
+
             return $redirect;
         }
-
-        $form = $this->createForm($this->getFormClass(), $entity, $this->getEditFormOptions($entity));
-        $form->handleRequest($request);
 
         $entityId = $this->getEntityId($entity);
 
@@ -321,7 +323,7 @@ abstract class AbstractCrudController extends AbstractController
             ->setDescription($this->resolveTranslatable($description));
 
         return $this->render($template, array_merge([
-            'form' => $form->createView(),
+            'form' => $result->formView,
             'base_layout' => $this->getBaseLayout(),
             'back_route' => $options['back_route'] ?? $this->getRoutePrefix().'_list',
             'show_back' => $options['show_back'] ?? true,

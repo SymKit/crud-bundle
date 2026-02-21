@@ -342,7 +342,7 @@
         value: value,
         choices: choices_data,
         searchable: searchable|default(true),
-        placeholder: placeholder|default('Select an option...'),
+        placeholder: placeholder|default('crud.component.rich_select.placeholder'|trans({}, 'SymkitCrud')),
         choiceIcons: choice_icons|default([]),
         required: required|default(false),
     }) }}
@@ -394,7 +394,7 @@
         value: current_value,
         choices: choices_data,
         searchable: false,
-        placeholder: placeholder|default('Select...'),
+        placeholder: placeholder|default('crud.component.checkbox_rich_select.placeholder'|trans({}, 'SymkitCrud')),
         choiceIcons: choice_icons|default([]),
         required: true,
     }) }}
@@ -412,7 +412,7 @@
     {{ component('PasswordField', {
         name: full_name,
         password: value|default(''),
-        placeholder: placeholder|default(label|default('Enter password...')),
+        placeholder: placeholder|default(label|default('crud.component.password_field.placeholder'|trans({}, 'SymkitCrud'))),
         showStrength: show_strength|default(true),
         minLength: min_length|default(8),
         requireUppercase: require_uppercase|default(false),

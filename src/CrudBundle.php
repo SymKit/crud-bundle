@@ -51,6 +51,7 @@ final class CrudBundle extends AbstractBundle
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('enabled')->defaultTrue()->end()
+                        ->integerNode('default_page_size')->defaultValue(25)->min(1)->end()
                     ->end()
                 ->end()
                 ->arrayNode('form_types')
@@ -93,7 +94,7 @@ final class CrudBundle extends AbstractBundle
     }
 
     /**
-     * @param array{crud: array{enabled: bool}, list: array{enabled: bool}, form_types: array{slug: bool, sitemap_priority: bool, icon_picker: bool, active_inactive: bool, form_section: bool}, form_extensions: array{rich_select: bool, password: bool, translatable: bool, url: bool, dependency: bool, checkbox_rich_select: bool}, components: array{back_link: bool, delete_form: bool, slug: bool, rich_select: bool, password_field: bool, translatable_field: bool, crud_list: bool, crud_filters: bool}, twig_prepend: bool, asset_mapper: bool} $config
+     * @param array{crud: array{enabled: bool}, list: array{enabled: bool, default_page_size: int}, form_types: array{slug: bool, sitemap_priority: bool, icon_picker: bool, active_inactive: bool, form_section: bool}, form_extensions: array{rich_select: bool, password: bool, translatable: bool, url: bool, dependency: bool, checkbox_rich_select: bool}, components: array{back_link: bool, delete_form: bool, slug: bool, rich_select: bool, password_field: bool, translatable_field: bool, crud_list: bool, crud_filters: bool}, twig_prepend: bool, asset_mapper: bool} $config
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
@@ -193,6 +194,7 @@ final class CrudBundle extends AbstractBundle
                 ->tag('twig.component', ['key' => 'SymkitCrud:CrudFilters'])
                 ->tag('ux.live_component');
             $services->set(CrudList::class)->autowire()->autoconfigure()
+                ->arg('$defaultPageSize', $config['list']['default_page_size'])
                 ->tag('twig.component', ['key' => 'SymkitCrud:CrudList'])
                 ->tag('ux.live_component');
         }

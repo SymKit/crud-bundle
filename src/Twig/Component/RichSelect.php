@@ -30,7 +30,7 @@ final class RichSelect
     public string $name = '';
 
     #[LiveProp]
-    public string $placeholder = 'Select an option...';
+    public string $placeholder = 'crud.component.rich_select.placeholder';
 
     #[LiveProp]
     public bool $required = false;

@@ -203,7 +203,7 @@ final class AbstractCrudControllerTest extends TestCase
         $sections = $controller->publicConfigureShowSections();
 
         self::assertArrayHasKey('general', $sections);
-        self::assertSame('Details', $sections['general']['label']);
+        self::assertSame('crud.show.section.general.label', $sections['general']['label']);
         self::assertArrayHasKey('icon', $sections['general']);
         self::assertArrayHasKey('description', $sections['general']);
         self::assertArrayHasKey('fields', $sections['general']);

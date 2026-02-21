@@ -3,6 +3,9 @@ import { Controller } from '@hotwired/stimulus';
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
     static targets = ['content', 'container'];
+    static values = {
+        title: { type: String, default: 'On this page' },
+    }
 
     connect() {
         if (!this.hasContentTarget || !this.hasContainerTarget) return;
@@ -23,7 +26,7 @@ export default class extends Controller {
 
         const title = document.createElement('h2');
         title.className = 'text-base font-bold text-slate-900 dark:text-white mb-3';
-        title.textContent = 'On this page';
+        title.textContent = this.titleValue;
 
         const ul = document.createElement('ul');
         ul.className = 'space-y-2';

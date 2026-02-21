@@ -33,7 +33,7 @@ final class DeleteFormTest extends TestCase
 
         self::assertSame([], $component->routeParams);
         self::assertSame('delete-form', $component->formId);
-        self::assertSame('Are you sure you want to delete this item?', $component->confirmMessage);
+        self::assertSame('crud.component.delete_form.confirm', $component->confirmMessage);
         self::assertSame('delete', $component->csrfTokenId);
     }
 }

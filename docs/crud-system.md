@@ -224,3 +224,35 @@ To redirect to a route without any parameters (e.g., for singleton settings):
 | `show_sections` | array | `configureShowSections()` | Professional sectioned layout config |
 | `after_detail_template` | string | - | Twig template to include after all sections (within `template_vars`) |
 
+## 9. Overriding Field Templates
+
+The CRUD bundle ships with default Twig templates for each view (`index`, `new`, `edit`, `show`). You can override them per-controller using the `template` option in `renderIndex()`, `renderNew()`, `renderEdit()`, or `renderShow()`:
+
+```php
+return $this->renderIndex(options: [
+    'template' => 'admin/product/index.html.twig',
+]);
+```
+
+Your custom template can extend the bundle's base template and override specific blocks:
+
+```twig
+{% extends '@SymkitCrud/crud/index.html.twig' %}
+
+{% block content %}
+    {# your custom content here #}
+{% endblock %}
+```
+
+To override all CRUD templates globally, place your overrides using Symfony's standard bundle template override mechanism:
+
+```
+templates/bundles/CrudBundle/crud/index.html.twig
+templates/bundles/CrudBundle/crud/new.html.twig
+templates/bundles/CrudBundle/crud/edit.html.twig
+templates/bundles/CrudBundle/crud/show.html.twig
+```
+
+## 10. Architecture Notes
+
+> **Doctrine ORM Only:** The persistence layer (`CrudPersistenceHandler`, `CrudListProvider`) currently only supports **Doctrine ORM**. The `CrudListProvider` uses DQL queries and the Doctrine `Paginator`. If you need to support another persistence layer, implement `CrudPersistenceHandlerInterface` and `CrudListProviderInterface` and override the service aliases.

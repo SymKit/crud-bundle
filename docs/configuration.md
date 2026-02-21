@@ -8,6 +8,7 @@ The bundle can be configured under `symkit_crud` in your application config (e.g
 |-----|--------|-------------|
 | `crud.enabled` | `true` | CRUD persistence layer (provider, persistence manager, Doctrine handler). |
 | `list.enabled` | `true` | List system (CrudList and CrudFilters Live components). |
+| `list.default_page_size` | `25` | Default number of items per page in CrudList. |
 | `form_types.slug` | `true` | SlugType and Slug Twig component. |
 | `form_types.sitemap_priority` | `true` | SitemapPriorityType. |
 | `form_types.icon_picker` | `true` | IconPickerType. |

@@ -20,7 +20,7 @@ final class PasswordField
     public string $name = '';
 
     #[LiveProp]
-    public string $placeholder = 'Enter password...';
+    public string $placeholder = 'crud.component.password_field.placeholder';
 
     #[LiveProp]
     public bool $showStrength = true;

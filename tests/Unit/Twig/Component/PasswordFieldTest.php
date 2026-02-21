@@ -119,7 +119,7 @@ final class PasswordFieldTest extends TestCase
 
         self::assertSame('', $field->password);
         self::assertSame('', $field->name);
-        self::assertSame('Enter password...', $field->placeholder);
+        self::assertSame('crud.component.password_field.placeholder', $field->placeholder);
         self::assertTrue($field->showStrength);
         self::assertSame(8, $field->minLength);
         self::assertFalse($field->requireUppercase);

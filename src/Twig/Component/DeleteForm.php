@@ -14,7 +14,7 @@ final class DeleteForm
     public array $routeParams = [];
     public string|int $entityId;
     public string $formId = 'delete-form';
-    public string $confirmMessage = 'Are you sure you want to delete this item?';
+    public string $confirmMessage = 'crud.component.delete_form.confirm';
     public string $csrfTokenId = 'delete';
 
     public function getCsrfTokenName(): string

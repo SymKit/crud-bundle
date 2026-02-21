@@ -100,7 +100,7 @@ final class RichSelectTest extends TestCase
         self::assertNull($component->value);
         self::assertTrue($component->searchable);
         self::assertSame('', $component->name);
-        self::assertSame('Select an option...', $component->placeholder);
+        self::assertSame('crud.component.rich_select.placeholder', $component->placeholder);
         self::assertFalse($component->required);
         self::assertSame([], $component->choiceIcons);
     }

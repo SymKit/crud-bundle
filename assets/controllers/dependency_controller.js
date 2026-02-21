@@ -5,15 +5,12 @@ export default class extends Controller {
     static targets = ["row"];
 
     connect() {
-        console.log('Dependency controller connected');
         this.updateVisibility();
     }
 
     switch(event) {
         const fieldName = event.currentTarget.dataset.dependencyField;
         const groupName = event.currentTarget.dataset.dependencyGroup;
-
-        console.log('Switch triggered', { fieldName, groupName });
 
         this.updateVisibility(groupName, fieldName);
     }
@@ -32,8 +29,6 @@ export default class extends Controller {
             const isActive = activeFieldName
                 ? rowField === activeFieldName
                 : row.dataset.dependencyActive === 'true';
-
-            console.log(`Checking row ${rowField}: active=${isActive}`);
 
             if (isActive) {
                 row.classList.remove('hidden');

@@ -14,7 +14,7 @@ final class BackLinkTest extends TestCase
         $component = new BackLink();
 
         self::assertSame([], $component->routeParams);
-        self::assertSame('Back', $component->label);
+        self::assertSame('crud.component.back_link.label', $component->label);
         self::assertSame('heroicons:arrow-left-20-solid', $component->icon);
     }
 
