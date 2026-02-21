@@ -4,21 +4,38 @@ declare(strict_types=1);
 
 namespace Symkit\CrudBundle\Tests\Unit\Crud\Controller;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symkit\CrudBundle\Contract\CrudPersistenceManagerInterface;
 use Symkit\CrudBundle\Crud\Controller\AbstractCrudController;
 use Symkit\MetadataBundle\Contract\PageContextBuilderInterface;
 
 final class AbstractCrudControllerTest extends TestCase
 {
-    private CrudPersistenceManagerInterface $persistenceManager;
-    private PageContextBuilderInterface $pageContextBuilder;
+    private CrudPersistenceManagerInterface&MockObject $persistenceManager;
+    private PageContextBuilderInterface&MockObject $pageContextBuilder;
+    private TranslatorInterface&MockObject $translator;
+    private Container $container;
 
     protected function setUp(): void
     {
         $this->persistenceManager = $this->createMock(CrudPersistenceManagerInterface::class);
         $this->pageContextBuilder = $this->createMock(PageContextBuilderInterface::class);
+        $this->pageContextBuilder->method('setTitle')->willReturnSelf();
+        $this->pageContextBuilder->method('setDescription')->willReturnSelf();
+
+        $this->translator = $this->createMock(TranslatorInterface::class);
+        $this->translator->method('trans')->willReturnCallback(
+            fn (string $id, array $parameters, string $domain) => strtr($id, $parameters).' (translated)',
+        );
+
+        $this->container = new Container();
+        $this->container->set('translator', $this->translator);
     }
 
     public function testGetEntityIdWithValidEntity(): void
@@ -78,7 +95,7 @@ final class AbstractCrudControllerTest extends TestCase
         };
 
         $label = $controller->publicGetEntityLabel($entity);
-        self::assertStringContainsString('#99', $label);
+        self::assertSame($entity::class.'#99', $label);
     }
 
     public function testGetBaseLayout(): void
@@ -198,12 +215,125 @@ final class AbstractCrudControllerTest extends TestCase
         self::assertSame([], $controller->publicConfigureSearchFields());
     }
 
+    public function testRenderIndexSetsPageContext(): void
+    {
+        $controller = $this->createController();
+        $request = new Request();
+
+        $this->pageContextBuilder
+            ->expects(self::once())
+            ->method('setTitle')
+            ->with('crud.index.title (translated)');
+
+        $this->pageContextBuilder
+            ->expects(self::once())
+            ->method('setDescription')
+            ->with('crud.index.description (translated)');
+
+        $controller->publicRenderIndex($request, [
+            'template' => 'custom_index.twig',
+            'create_route' => 'custom_create',
+            'create_label' => 'Custom Label',
+            'template_vars' => ['custom_var' => true],
+        ]);
+
+        self::assertSame('custom_index.twig', $controller->lastRenderView);
+        self::assertTrue($controller->lastRenderParameters['custom_var']);
+        self::assertSame('custom_create', $controller->lastRenderParameters['create_route']);
+        self::assertSame('Custom Label', $controller->lastRenderParameters['create_label']);
+    }
+
+    public function testRenderIndexDefaults(): void
+    {
+        $controller = $this->createController();
+        $controller->publicRenderIndex(new Request());
+
+        self::assertSame('@SymkitCrud/crud/index.html.twig', $controller->lastRenderView);
+        self::assertInstanceOf(TranslatableMessage::class, $controller->lastRenderParameters['page_title']);
+        self::assertInstanceOf(TranslatableMessage::class, $controller->lastRenderParameters['page_description']);
+        self::assertSame('app_test_entity_create', $controller->lastRenderParameters['create_route']);
+        self::assertInstanceOf(TranslatableMessage::class, $controller->lastRenderParameters['create_label']);
+    }
+
+    public function testRenderNewSetsPageContext(): void
+    {
+        $controller = $this->createController();
+        $request = new Request();
+        $entity = new \stdClass();
+
+        $this->pageContextBuilder
+            ->expects(self::once())
+            ->method('setTitle')
+            ->with('Custom Title');
+
+        $this->pageContextBuilder
+            ->expects(self::once())
+            ->method('setDescription')
+            ->with('Custom Description');
+
+        $controller->publicRenderNew($entity, $request, [
+            'page_title' => 'Custom Title',
+            'page_description' => 'Custom Description',
+        ]);
+    }
+
+    public function testRenderEditSetsPageContext(): void
+    {
+        $controller = $this->createController();
+        $request = new Request();
+        $entity = new class {
+            public function getId(): int
+            {
+                return 1;
+            }
+        };
+
+        $this->pageContextBuilder
+            ->expects(self::once())
+            ->method('setTitle')
+            ->with('Edit Item');
+
+        $this->pageContextBuilder
+            ->expects(self::once())
+            ->method('setDescription')
+            ->with(null);
+
+        $controller->publicRenderEdit($entity, $request, []);
+    }
+
+    public function testRenderShowSetsPageContext(): void
+    {
+        $controller = $this->createController();
+        $entity = new \stdClass();
+
+        $this->pageContextBuilder
+            ->expects(self::once())
+            ->method('setTitle')
+            ->with('View Details');
+
+        $this->pageContextBuilder
+            ->expects(self::once())
+            ->method('setDescription')
+            ->with(null);
+
+        $controller->publicRenderShow($entity, []);
+    }
+
     private function createController(): TestCrudController
     {
-        return new TestCrudController(
+        $form = $this->createMock(\Symfony\Component\Form\FormInterface::class);
+        $form->method('createView')->willReturn(new \Symfony\Component\Form\FormView());
+        $form->method('isSubmitted')->willReturn(false);
+        $form->method('isValid')->willReturn(false);
+
+        $controller = new TestCrudController(
             $this->persistenceManager,
             $this->pageContextBuilder,
+            $form,
         );
+        $controller->setContainer($this->container);
+
+        return $controller;
     }
 }
 
@@ -212,6 +342,24 @@ final class AbstractCrudControllerTest extends TestCase
  */
 class TestCrudController extends AbstractCrudController
 {
+    private \Symfony\Component\Form\FormInterface $mockForm;
+    public ?string $lastRenderView = null;
+    public ?array $lastRenderParameters = null;
+    public ?string $lastRedirectRoute = null;
+    public ?array $lastRedirectParams = null;
+    public array $lastFlashes = [];
+
+    public function __construct(
+        CrudPersistenceManagerInterface $persistenceManager,
+        PageContextBuilderInterface $pageContextBuilder,
+        ?\Symfony\Component\Form\FormInterface $mockForm = null,
+    ) {
+        parent::__construct($persistenceManager, $pageContextBuilder);
+        if ($mockForm) {
+            $this->mockForm = $mockForm;
+        }
+    }
+
     protected function getEntityClass(): string
     {
         return 'App\\Entity\\TestEntity';
@@ -337,5 +485,52 @@ class TestCrudController extends AbstractCrudController
     public function publicConfigureSearchFields(): array
     {
         return $this->configureSearchFields();
+    }
+
+    public function publicRenderIndex(Request $request, array $options = []): Response
+    {
+        return $this->renderIndex($request, $options);
+    }
+
+    public function publicRenderNew(object $entity, Request $request, array $options = []): Response
+    {
+        return $this->renderNew($entity, $request, $options);
+    }
+
+    public function publicRenderEdit(object $entity, Request $request, array $options = []): Response
+    {
+        return $this->renderEdit($entity, $request, $options);
+    }
+
+    public function publicRenderShow(object $entity, array $options = []): Response
+    {
+        return $this->renderShow($entity, $options);
+    }
+
+    // Override render and createForm to simulate base controller without full container
+    protected function render(string $view, array $parameters = [], ?Response $response = null): Response
+    {
+        $this->lastRenderView = $view;
+        $this->lastRenderParameters = $parameters;
+
+        return new Response('dummy render');
+    }
+
+    protected function redirectToRoute(string $route, array $parameters = [], int $status = 302): \Symfony\Component\HttpFoundation\RedirectResponse
+    {
+        $this->lastRedirectRoute = $route;
+        $this->lastRedirectParams = $parameters;
+
+        return new \Symfony\Component\HttpFoundation\RedirectResponse('dummy_redirect');
+    }
+
+    protected function addFlash(string $type, mixed $message): void
+    {
+        $this->lastFlashes[$type][] = $message;
+    }
+
+    protected function createForm(string $type, mixed $data = null, array $options = []): \Symfony\Component\Form\FormInterface
+    {
+        return $this->mockForm;
     }
 }

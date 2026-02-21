@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symkit\CrudBundle\Contract\CrudPersistenceManagerInterface;
 use Symkit\MetadataBundle\Contract\PageContextBuilderInterface;
 
@@ -150,9 +151,18 @@ abstract class AbstractCrudController extends AbstractController
         /** @var array<string, mixed> $templateVars */
         $templateVars = $options['template_vars'] ?? [];
 
+        /** @var string|TranslatableMessage|null $title */
+        $title = $options['page_title'] ?? $this->getIndexPageTitle();
+        /** @var string|TranslatableMessage|null $description */
+        $description = $options['page_description'] ?? $this->getIndexPageDescription();
+
+        $this->pageContextBuilder
+            ->setTitle($this->resolveTranslatable($title))
+            ->setDescription($this->resolveTranslatable($description));
+
         return $this->render($template, array_merge([
-            'page_title' => $options['page_title'] ?? $this->getIndexPageTitle(),
-            'page_description' => $options['page_description'] ?? $this->getIndexPageDescription(),
+            'page_title' => $title,
+            'page_description' => $description,
             'base_layout' => $this->getBaseLayout(),
             'entity_class' => $this->getEntityClass(),
             'search_fields' => $this->configureSearchFields(),
@@ -206,13 +216,22 @@ abstract class AbstractCrudController extends AbstractController
         /** @var array<string, mixed> $templateVars */
         $templateVars = $options['template_vars'] ?? [];
 
+        /** @var string|TranslatableMessage|null $title */
+        $title = $options['page_title'] ?? 'Create New';
+        /** @var string|TranslatableMessage|null $description */
+        $description = $options['page_description'] ?? '';
+
+        $this->pageContextBuilder
+            ->setTitle($this->resolveTranslatable($title))
+            ->setDescription($this->resolveTranslatable($description));
+
         return $this->render($template, array_merge([
             'form' => $form->createView(),
             'base_layout' => $this->getBaseLayout(),
             'back_route' => $this->getRoutePrefix().'_list',
             'show_back' => true,
-            'page_title' => $options['page_title'] ?? 'Create New',
-            'page_description' => $options['page_description'] ?? '',
+            'page_title' => $title,
+            'page_description' => $description,
             'after_form_template' => $options['after_form_template'] ?? null,
             'extra_nav_items_template' => $options['extra_nav_items_template'] ?? null,
         ], $templateVars));
@@ -244,6 +263,15 @@ abstract class AbstractCrudController extends AbstractController
         /** @var array<string, mixed> $templateVars */
         $templateVars = $options['template_vars'] ?? [];
 
+        /** @var string|TranslatableMessage|null $title */
+        $title = $options['page_title'] ?? 'Edit Item';
+        /** @var string|TranslatableMessage|null $description */
+        $description = $options['page_description'] ?? '';
+
+        $this->pageContextBuilder
+            ->setTitle($this->resolveTranslatable($title))
+            ->setDescription($this->resolveTranslatable($description));
+
         return $this->render($template, array_merge([
             'form' => $form->createView(),
             'base_layout' => $this->getBaseLayout(),
@@ -253,8 +281,8 @@ abstract class AbstractCrudController extends AbstractController
             'delete_route' => $options['delete_route'] ?? $this->getRoutePrefix().'_delete',
             'delete_route_params' => $options['delete_route_params'] ?? ['id' => $entityId],
             'entity_id' => $entityId,
-            'page_title' => $options['page_title'] ?? 'Edit Item',
-            'page_description' => $options['page_description'] ?? '',
+            'page_title' => $title,
+            'page_description' => $description,
             'after_form_template' => $options['after_form_template'] ?? null,
             'extra_nav_items_template' => $options['extra_nav_items_template'] ?? null,
         ], $templateVars));
@@ -268,13 +296,22 @@ abstract class AbstractCrudController extends AbstractController
         /** @var array<string, mixed> $templateVars */
         $templateVars = $options['template_vars'] ?? [];
 
+        /** @var string|TranslatableMessage|null $title */
+        $title = $options['page_title'] ?? 'View Details';
+        /** @var string|TranslatableMessage|null $description */
+        $description = $options['page_description'] ?? '';
+
+        $this->pageContextBuilder
+            ->setTitle($this->resolveTranslatable($title))
+            ->setDescription($this->resolveTranslatable($description));
+
         return $this->render($template, array_merge([
             'entity' => $entity,
             'base_layout' => $this->getBaseLayout(),
             'back_route' => $options['back_route'] ?? $this->getRoutePrefix().'_list',
             'show_back' => $options['show_back'] ?? true,
-            'page_title' => $options['page_title'] ?? 'View Details',
-            'page_description' => $options['page_description'] ?? '',
+            'page_title' => $title,
+            'page_description' => $description,
             'show_sections' => $options['show_sections'] ?? $this->configureShowSections(),
         ], $templateVars));
     }
@@ -292,5 +329,26 @@ abstract class AbstractCrudController extends AbstractController
         }
 
         return $this->redirectToRoute($this->getRoutePrefix().'_list');
+    }
+
+    protected function resolveTranslatable(string|TranslatableMessage|null $message): ?string
+    {
+        if (null === $message || '' === $message) {
+            return null;
+        }
+
+        if ($message instanceof TranslatableMessage) {
+            /** @var TranslatorInterface|null $translator */
+            $translator = $this->container->has('translator') ? $this->container->get('translator') : null;
+
+            if (null !== $translator) {
+                return $translator->trans($message->getMessage(), $message->getParameters(), $message->getDomain());
+            }
+
+            // Fallback for missing translator: return plain message
+            return strtr($message->getMessage(), $message->getParameters());
+        }
+
+        return $message;
     }
 }
