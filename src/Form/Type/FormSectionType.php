@@ -2,19 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Symkit\CrudBundle\Form\Extension;
+namespace Symkit\CrudBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class FormSectionExtension extends AbstractTypeExtension
+/**
+ * Form type for card-style sections in sectioned forms.
+ * Only forms using this type get section options (icon, description, full_width).
+ */
+final class FormSectionType extends AbstractType
 {
-    public static function getExtendedTypes(): iterable
+    public function getParent(): string
     {
-        return [FormType::class];
+        return FormType::class;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void

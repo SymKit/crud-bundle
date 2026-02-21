@@ -12,11 +12,11 @@ The bundle can be configured under `symkit_crud` in your application config (e.g
 | `form_types.sitemap_priority` | `true` | SitemapPriorityType. |
 | `form_types.icon_picker` | `true` | IconPickerType. |
 | `form_types.active_inactive` | `true` | ActiveInactiveType. |
+| `form_types.form_section` | `true` | FormSectionType for card-style sections in sectioned forms. |
 | `form_extensions.rich_select` | `true` | RichSelect form extension and component. |
 | `form_extensions.password` | `true` | Password form extension and PasswordField component. |
 | `form_extensions.translatable` | `true` | Translatable form extension and TranslatableField component. |
 | `form_extensions.url` | `true` | URL form extension. |
-| `form_extensions.form_section` | `true` | FormSection extension. |
 | `form_extensions.dependency` | `true` | Dependency (dependent fields) extension. |
 | `form_extensions.checkbox_rich_select` | `true` | CheckboxRichSelect extension. |
 | `components.back_link` | `true` | BackLink Twig component. |

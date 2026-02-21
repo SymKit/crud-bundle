@@ -1,21 +1,20 @@
-{# 
-    Template embedable pour formulaires avec sections en cartes.
-    
-    Utilise le pattern inherit_data pour grouper les champs.
-    
-    Usage dans le FormType:
+{#
+    Embeddable template for forms with card-style sections.
+    Use FormSectionType (not FormType) for each group so only those get section options.
+
+    In your FormType:
     $builder->add(
-        $builder->create('general', FormType::class, [
+        $builder->create('general', FormSectionType::class, [
             'inherit_data' => true,
-            'label' => 'Général',
+            'label' => 'General',
             'section_icon' => 'heroicons:info...',
             'section_description' => 'Description...',
         ])
             ->add('name', TextType::class)
             ->add('email', TextType::class)
     );
-    
-    Usage dans le template:
+
+    In your template:
     {% embed '@SymkitCrud/form/sectioned_form.html.twig' with {form: form} %}
         {% block form_actions %}
             <button type="submit">Save</button>
@@ -108,7 +107,7 @@
                 <button type="submit"
                     class="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-slate-900 dark:bg-indigo-600 text-white text-sm font-medium shadow-lg hover:bg-slate-800 dark:hover:bg-indigo-500 transition-all cursor-pointer">
                     {{ ux_icon('heroicons:check-20-solid', {class: 'w-4 h-4'}) }}
-                    Enregistrer
+                    {{ 'crud.action.save'|trans({}, 'SymkitCrud') }}
                 </button>
             {% endblock %}
         </div>

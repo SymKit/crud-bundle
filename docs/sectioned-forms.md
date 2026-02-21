@@ -2,10 +2,12 @@
 
 Create modern forms with card-based sections, sticky navigation, and responsive design using the `inherit_data` pattern.
 
-## 1. Define groups in your FormType
+## 1. Define groups with FormSectionType
+
+Use `FormSectionType` (not `FormType`) for each section so that only those groups get section options (icon, description, full width). This keeps section-related options off all other forms.
 
 ```php
-use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symkit\CrudBundle\Form\Type\FormSectionType;
 
 class MyFormType extends AbstractType
 {
@@ -13,7 +15,7 @@ class MyFormType extends AbstractType
     {
         // Group: General Information
         $builder->add(
-            $builder->create('general', FormType::class, [
+            $builder->create('general', FormSectionType::class, [
                 'inherit_data' => true,
                 'label' => 'General Information',
                 'section_icon' => 'heroicons:information-circle-20-solid',
@@ -25,7 +27,7 @@ class MyFormType extends AbstractType
 
         // Group: Settings
         $builder->add(
-            $builder->create('settings', FormType::class, [
+            $builder->create('settings', FormSectionType::class, [
                 'inherit_data' => true,
                 'label' => 'Settings',
                 'section_icon' => 'heroicons:cog-6-tooth-20-solid',
@@ -169,7 +171,7 @@ For pages that need extra content (like a related items list), use embed with bl
 | `delete_route_params` | array | `{}` | Route params for delete |
 | `entity_id` | mixed | - | Entity ID for CSRF token |
 | `delete_confirm_message` | string | `'Are you sure...'` | Delete confirmation text |
-| `delete_button_label` | string | `'Supprimer'` | Delete button text |
+| `delete_button_label` | string | `'Delete'` | Delete button text |
 
 ### Available Blocks (for embed)
 

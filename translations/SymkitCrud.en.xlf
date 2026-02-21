@@ -35,6 +35,14 @@
                 <source>crud.action.create</source>
                 <target>Create New</target>
             </trans-unit>
+            <trans-unit id="crud.action.save" resname="crud.action.save">
+                <source>crud.action.save</source>
+                <target>Save</target>
+            </trans-unit>
+            <trans-unit id="crud.action.delete" resname="crud.action.delete">
+                <source>crud.action.delete</source>
+                <target>Delete</target>
+            </trans-unit>
             <trans-unit id="crud.success.created" resname="crud.success.created">
                 <source>crud.success.created</source>
                 <target>Created %entity% successfully.</target>

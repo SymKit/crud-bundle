@@ -1,6 +1,6 @@
 {
     "name": "symkit/crud-bundle",
-    "description": "CRUD Bundle for Symfony",
+    "description": "Symfony bundle for CRUD, Live lists (filters, sort, pagination), form types and extensions, Twig components (RichSelect, Slug, Password, Translatable, BackLink, DeleteForm, CrudList, CrudFilters), Tailwind theme and Stimulus",
     "type": "symfony-bundle",
     "license": "MIT",
     "autoload": {
@@ -11,15 +11,13 @@
     "require": {
         "php": ">=8.2",
         "doctrine/orm": "^3.6",
+        "symkit/metadata-bundle": "^0.0.1",
         "symfony/framework-bundle": "^7.0 || ^8.0",
-        "symfony/form": "^8.0",
+        "symfony/form": "^7.0 || ^8.0",
         "symfony/string": "^7.0 || ^8.0",
-        "symfony/translation": "^8.0",
+        "symfony/translation": "^7.0 || ^8.0",
         "symfony/ux-icons": "2.*",
         "symfony/ux-live-component": "2.*"
-    },
-    "suggest": {
-        "symkit/metadata-bundle": "For SEO and breadcrumbs in CRUD (PageContextBuilderInterface)"
     },
     "require-dev": {
         "deptrac/deptrac": "^2.0",
@@ -30,8 +28,7 @@
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^11.0",
         "symkit/bundle-ai-kit": "^0.0.5",
-        "symkit/metadata-bundle": "^0.0.1",
-        "symfony/asset-mapper": "^8.0"
+        "symfony/asset-mapper": "^7.0 || ^8.0"
     },
     "config": {
         "allow-plugins": {

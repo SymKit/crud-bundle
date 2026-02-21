@@ -18,12 +18,12 @@ use Symkit\CrudBundle\Crud\Persistence\Manager\CrudPersistenceManager;
 use Symkit\CrudBundle\Crud\Persistence\Provider\CrudListProvider;
 use Symkit\CrudBundle\Form\Extension\CheckboxRichSelectExtension;
 use Symkit\CrudBundle\Form\Extension\DependencyExtension;
-use Symkit\CrudBundle\Form\Extension\FormSectionExtension;
 use Symkit\CrudBundle\Form\Extension\PasswordExtension;
 use Symkit\CrudBundle\Form\Extension\RichSelectExtension;
 use Symkit\CrudBundle\Form\Extension\TranslatableExtension;
 use Symkit\CrudBundle\Form\Extension\UrlExtension;
 use Symkit\CrudBundle\Form\Type\ActiveInactiveType;
+use Symkit\CrudBundle\Form\Type\FormSectionType;
 use Symkit\CrudBundle\Form\Type\IconPickerType;
 use Symkit\CrudBundle\Form\Type\SitemapPriorityType;
 use Symkit\CrudBundle\Form\Type\SlugType;
@@ -60,6 +60,7 @@ final class CrudBundle extends AbstractBundle
                         ->booleanNode('sitemap_priority')->defaultTrue()->end()
                         ->booleanNode('icon_picker')->defaultTrue()->end()
                         ->booleanNode('active_inactive')->defaultTrue()->end()
+                        ->booleanNode('form_section')->defaultTrue()->end()
                     ->end()
                 ->end()
                 ->arrayNode('form_extensions')
@@ -69,7 +70,6 @@ final class CrudBundle extends AbstractBundle
                         ->booleanNode('password')->defaultTrue()->end()
                         ->booleanNode('translatable')->defaultTrue()->end()
                         ->booleanNode('url')->defaultTrue()->end()
-                        ->booleanNode('form_section')->defaultTrue()->end()
                         ->booleanNode('dependency')->defaultTrue()->end()
                         ->booleanNode('checkbox_rich_select')->defaultTrue()->end()
                     ->end()
@@ -93,7 +93,7 @@ final class CrudBundle extends AbstractBundle
     }
 
     /**
-     * @param array{crud: array{enabled: bool}, list: array{enabled: bool}, form_types: array{slug: bool, sitemap_priority: bool, icon_picker: bool, active_inactive: bool}, form_extensions: array{rich_select: bool, password: bool, translatable: bool, url: bool, form_section: bool, dependency: bool, checkbox_rich_select: bool}, components: array{back_link: bool, delete_form: bool, slug: bool, rich_select: bool, password_field: bool, translatable_field: bool, crud_list: bool, crud_filters: bool}, twig_prepend: bool, asset_mapper: bool} $config
+     * @param array{crud: array{enabled: bool}, list: array{enabled: bool}, form_types: array{slug: bool, sitemap_priority: bool, icon_picker: bool, active_inactive: bool, form_section: bool}, form_extensions: array{rich_select: bool, password: bool, translatable: bool, url: bool, dependency: bool, checkbox_rich_select: bool}, components: array{back_link: bool, delete_form: bool, slug: bool, rich_select: bool, password_field: bool, translatable_field: bool, crud_list: bool, crud_filters: bool}, twig_prepend: bool, asset_mapper: bool} $config
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
@@ -123,6 +123,9 @@ final class CrudBundle extends AbstractBundle
         }
         if ($formTypes['icon_picker']) {
             $services->set(IconPickerType::class)->autowire()->autoconfigure()->tag('form.type');
+        }
+        if ($formTypes['form_section']) {
+            $services->set(FormSectionType::class)->tag('form.type');
         }
 
         if ($formExt['checkbox_rich_select']) {
@@ -167,9 +170,6 @@ final class CrudBundle extends AbstractBundle
         }
         if ($formExt['dependency']) {
             $services->set(DependencyExtension::class)->tag('form.type_extension');
-        }
-        if ($formExt['form_section']) {
-            $services->set(FormSectionExtension::class)->tag('form.type_extension');
         }
 
         if ($formTypes['slug']) {
