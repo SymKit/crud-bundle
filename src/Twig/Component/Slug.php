@@ -121,12 +121,19 @@ final class Slug
             return $slug;
         }
 
-        $manager = $this->doctrine->getManagerForClass($this->entityClass);
+        if (null === $this->entityClass) {
+            return $slug;
+        }
+
+        /** @var class-string<object> $entityClass */
+        $entityClass = $this->entityClass;
+
+        $manager = $this->doctrine->getManagerForClass($entityClass);
         if (!$manager) {
             return $slug;
         }
 
-        $repository = $manager->getRepository($this->entityClass);
+        $repository = $manager->getRepository($entityClass);
 
         if ($this->repositoryMethod) {
             if (!method_exists($repository, $this->repositoryMethod)) {

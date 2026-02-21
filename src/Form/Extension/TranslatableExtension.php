@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class TranslatableExtension extends AbstractTypeExtension
 {
+    /** @param list<string> $enabledLocales */
     public function __construct(
         private readonly string $defaultLocale,
         private readonly array $enabledLocales,

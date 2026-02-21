@@ -37,6 +37,7 @@ final class PasswordField
     #[LiveProp]
     public bool $requireSpecial = false;
 
+    /** @return array{score: int, rules: array{length: bool, uppercase: bool, number: bool, special: bool}} */
     public function getStrength(): array
     {
         if ('' === $this->password) {

@@ -16,6 +16,7 @@ final class RichSelect
     #[LiveProp(writable: true)]
     public string $searchQuery = '';
 
+    /** @var array<string, string> */
     #[LiveProp]
     public array $choices = [];
 
@@ -34,9 +35,11 @@ final class RichSelect
     #[LiveProp]
     public bool $required = false;
 
+    /** @var array<string, array{name: string, class: string}> */
     #[LiveProp]
     public array $choiceIcons = [];
 
+    /** @return array<string, string> */
     public function getFilteredChoices(): array
     {
         if (!$this->searchable || '' === $this->searchQuery) {

@@ -10,6 +10,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 final class DeleteForm
 {
     public string $route;
+    /** @var array<string, mixed> */
     public array $routeParams = [];
     public string|int $entityId;
     public string $formId = 'delete-form';

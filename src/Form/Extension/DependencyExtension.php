@@ -47,7 +47,7 @@ final class DependencyExtension extends AbstractTypeExtension
         // If parent exists, let's collect all group members to help Twig
         if ($view->parent) {
             $groupMembers = [];
-            foreach ($form->getParent()?->all() as $name => $child) {
+            foreach ($form->getParent()?->all() ?? [] as $name => $child) {
                 $childConfig = $child->getConfig();
                 if ($childConfig->getOption('dependency_group') === $options['dependency_group']) {
                     $groupMembers[] = [
