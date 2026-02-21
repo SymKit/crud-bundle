@@ -1,0 +1,38 @@
+deptrac:
+  paths:
+    - src/
+
+  layers:
+    - name: Contract
+      collectors:
+        - type: directory
+          value: src/Contract/.*
+
+    - name: Crud
+      collectors:
+        - type: directory
+          value: src/Crud/.*
+
+    - name: Form
+      collectors:
+        - type: directory
+          value: src/Form/.*
+
+    - name: Twig
+      collectors:
+        - type: directory
+          value: src/Twig/.*
+
+    - name: Service
+      collectors:
+        - type: directory
+          value: src/Service/.*
+
+  ruleset:
+    Contract: []
+    Crud:
+      - Contract
+    Form:
+      - Service
+    Twig: []
+    Service: []

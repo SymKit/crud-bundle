@@ -1,0 +1,31 @@
+.PHONY: cs-fix cs-check phpstan test deptrac infection security-check quality ci install-hooks
+
+cs-fix:
+	vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes
+
+cs-check:
+	vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes --dry-run --diff
+
+phpstan:
+	vendor/bin/phpstan analyse --configuration=phpstan.neon.dist --memory-limit=-1
+
+test:
+	vendor/bin/phpunit --configuration=phpunit.xml.dist
+
+deptrac:
+	vendor/bin/deptrac analyse --config-file=deptrac.yaml
+
+infection:
+	vendor/bin/infection --configuration=infection.json5 --only-covered --threads=max --min-msi=80 --min-covered-msi=80
+
+security-check:
+	composer audit --abandoned=report
+
+# Run 'make infection' after tests have coverage (Phase 2+). Requires XDEBUG_MODE=coverage or pcov.
+quality: cs-check phpstan deptrac test
+
+ci: security-check quality
+
+install-hooks:
+	cp scripts/git-hooks/commit-msg .git/hooks/commit-msg
+	chmod +x .git/hooks/commit-msg

@@ -1,0 +1,12 @@
+# Pre-commit: phpstan, cs, phpunit. Deptrac/Infection run via make quality / make ci (deptrac phar can conflict in hook).
+grumphp:
+    tasks:
+        phpstan:
+            configuration: phpstan.neon.dist
+            memory_limit: '-1'
+        phpcsfixer:
+            config: .php-cs-fixer.dist.php
+            allow_risky: true
+        phpunit:
+            config_file: phpunit.xml.dist
+            always_execute: true

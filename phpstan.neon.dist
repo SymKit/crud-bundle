@@ -1,0 +1,14 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 9
+    paths:
+        - src/
+    tmpDir: .phpstan-cache
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Call to an undefined method object::getId\(\)#'
+        - '#Cannot cast object to string#'
+        - '#getRepository.*class-string#'
+        - '#Paginator does not specify its types#'
