@@ -11,8 +11,8 @@
     "require": {
         "php": ">=8.2",
         "doctrine/orm": "^3.6",
-        "symkit/form-bundle": "^0.0.1",
-        "symkit/metadata-bundle": "^0.0.1",
+        "symkit/form-bundle": "~0.0.1",
+        "symkit/metadata-bundle": "~0.0.1",
         "symfony/framework-bundle": "^7.0 || ^8.0",
         "symfony/form": "^7.0 || ^8.0",
         "symfony/string": "^7.0 || ^8.0",
@@ -28,7 +28,7 @@
         "phpro/grumphp": "^2.0",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^11.0",
-        "symkit/bundle-ai-kit": "^0.0.5",
+        "symkit/bundle-ai-kit": "~0.0.1",
         "symfony/asset-mapper": "^7.0 || ^8.0"
     },
     "config": {
