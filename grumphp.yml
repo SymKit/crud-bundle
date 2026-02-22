@@ -1,6 +1,8 @@
-# Pre-commit: phpstan, cs, phpunit. Deptrac/Infection run via make quality / make ci (deptrac phar can conflict in hook).
 grumphp:
     tasks:
+        make:
+            task: deptrac
+            triggered_by: [php]
         phpstan:
             configuration: phpstan.neon.dist
             memory_limit: 512M
@@ -9,8 +11,7 @@ grumphp:
             config: .php-cs-fixer.dist.php
         phpunit:
             config_file: phpunit.xml.dist
-        infection:
-            min_covered_msi: 80
-            only_covered: true
-            threads: 4
-            test_framework: phpunit
+        shell:
+            scripts:
+                - ['-c', 'make infection']
+            triggered_by: [php]

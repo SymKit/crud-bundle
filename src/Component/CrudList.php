@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Symkit\CrudBundle\Component;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveListener;
@@ -13,7 +12,6 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symkit\CrudBundle\Contract\CrudListProviderInterface;
 
-#[AsLiveComponent('SymkitCrud:CrudList', template: '@SymkitCrud/crud/component/crud_list.html.twig')]
 final class CrudList
 {
     use DefaultActionTrait;

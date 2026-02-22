@@ -7,7 +7,7 @@ namespace Symkit\CrudBundle\Persistence\Handler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symkit\CrudBundle\Contract\CrudPersistenceHandlerInterface;
 
-final class DoctrinePersistenceHandler implements CrudPersistenceHandlerInterface
+final readonly class DoctrinePersistenceHandler implements CrudPersistenceHandlerInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,

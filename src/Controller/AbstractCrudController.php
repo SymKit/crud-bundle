@@ -12,6 +12,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symkit\CrudBundle\Contract\CrudPersistenceManagerInterface;
 use Symkit\MetadataBundle\Contract\PageContextBuilderInterface;
 
+/**
+ * Base CRUD controller for host applications to extend.
+ *
+ * Exception to the "never extend AbstractController" rule: this class is the
+ * bundle's designated extension point for apps. Extending Symfony's
+ * AbstractController is intentional to provide render(), redirectToRoute(),
+ * addFlash(), etc. without requiring apps to inject each service.
+ */
 abstract class AbstractCrudController extends AbstractController
 {
     public function __construct(

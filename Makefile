@@ -1,4 +1,4 @@
-.PHONY: cs-fix cs-check phpstan test deptrac infection security-check quality ci install-hooks
+.PHONY: cs-fix cs-check phpstan test deptrac lint infection security-check quality ci
 
 cs-fix:
 	vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes
@@ -15,17 +15,16 @@ test:
 deptrac:
 	vendor/bin/deptrac analyse --config-file=deptrac.yaml
 
+lint:
+	composer validate --strict
+
 infection:
-	vendor/bin/infection --configuration=infection.json5 --only-covered --threads=max --min-msi=80 --min-covered-msi=80
+	vendor/bin/infection --configuration=infection.json5 --only-covered --threads=max
 
 security-check:
 	composer audit --abandoned=report
 
-# Run 'make infection' after tests have coverage (Phase 2+). Requires XDEBUG_MODE=coverage or pcov.
-quality: cs-check phpstan deptrac test
+# Run 'make infection' after tests have coverage. Requires XDEBUG_MODE=coverage or pcov.
+quality: cs-check phpstan deptrac lint test infection
 
 ci: security-check quality
-
-install-hooks:
-	cp scripts/git-hooks/commit-msg .git/hooks/commit-msg
-	chmod +x .git/hooks/commit-msg

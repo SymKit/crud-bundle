@@ -7,13 +7,11 @@ namespace Symkit\CrudBundle\Component;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent('SymkitCrud:CrudFilters', template: '@SymkitCrud/crud/component/crud_filters.html.twig')]
 final class CrudFilters
 {
     use ComponentToolsTrait;

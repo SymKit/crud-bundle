@@ -19,7 +19,7 @@ use Symkit\CrudBundle\Persistence\Provider\CrudListProvider;
 use Symkit\CrudBundle\Twig\Component\BackLink;
 use Symkit\CrudBundle\Twig\Component\DeleteForm;
 
-final class CrudBundle extends AbstractBundle
+class CrudBundle extends AbstractBundle
 {
     public function configure(DefinitionConfigurator $definition): void
     {

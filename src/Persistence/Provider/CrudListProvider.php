@@ -11,7 +11,7 @@ use Symkit\CrudBundle\Contract\CrudListProviderInterface;
 use Symkit\CrudBundle\Enum\CrudEvents;
 use Symkit\CrudBundle\Event\CrudListQueryEvent;
 
-final class CrudListProvider implements CrudListProviderInterface
+final readonly class CrudListProvider implements CrudListProviderInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,

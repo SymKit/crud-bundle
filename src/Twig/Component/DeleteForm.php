@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Symkit\CrudBundle\Twig\Component;
 
-use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
-
-#[AsTwigComponent('DeleteForm', template: '@SymkitCrud/components/DeleteForm.html.twig')]
 final class DeleteForm
 {
     public string $route;

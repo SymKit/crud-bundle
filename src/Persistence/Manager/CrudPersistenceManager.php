@@ -12,7 +12,7 @@ use Symkit\CrudBundle\Contract\CrudPersistenceManagerInterface;
 use Symkit\CrudBundle\Enum\CrudEvents;
 use Symkit\CrudBundle\Event\CrudEvent;
 
-final class CrudPersistenceManager implements CrudPersistenceManagerInterface
+final readonly class CrudPersistenceManager implements CrudPersistenceManagerInterface
 {
     public function __construct(
         private readonly CrudPersistenceHandlerInterface $handler,
