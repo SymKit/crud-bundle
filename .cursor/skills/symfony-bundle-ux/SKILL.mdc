@@ -1,3 +1,7 @@
+---
+name: symfony-bundle-ux
+description: "Use this skill whenever building or integrating frontend assets in a Symfony bundle: AssetMapper, Stimulus controllers, Twig Components (UI-only and Live), importmaps, CSS/JS distribution, lazy-loading, package.json UX metadata. Trigger when: 'stimulus controller in bundle', 'assetmapper bundle', 'twig component bundle', 'bundle assets', 'UX bundle', 'live component bundle', 'bundle frontend', 'no-build bundle'. Do NOT trigger for application-level asset management."
+---
 
 # Symfony Bundle UX — AssetMapper, Stimulus & Twig Components
 
@@ -186,15 +190,14 @@ declare(strict_types=1);
 
 namespace Acme\BlogBundle\Twig\Components;
 
-use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
-
-#[AsTwigComponent('Acme:Search', template: '@AcmeBlog/components/Acme/Search.html.twig')]
 final class Search
 {
     public string $placeholder = 'Search...';
     public string $endpoint = '/search';
 }
 ```
+
+**No `#[AsTwigComponent]` attribute** — in a bundle, components are registered via `prependExtension()` (see below).
 
 ### Registration via prependExtension
 
@@ -224,13 +227,12 @@ declare(strict_types=1);
 
 namespace Acme\BlogBundle\Twig\Components;
 
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveListener;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent]
+// No #[AsLiveComponent] attribute — registered via prependExtension() (twig_component.defaults)
 final class SearchLive
 {
     use DefaultActionTrait;

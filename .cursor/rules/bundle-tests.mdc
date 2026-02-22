@@ -1,5 +1,7 @@
 ---
+description: Testing patterns for Symfony bundle test suites
 globs: tests/**/*.php
+alwaysApply: false
 ---
 
 # Bundle Test Conventions

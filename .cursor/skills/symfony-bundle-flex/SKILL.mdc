@@ -1,3 +1,7 @@
+---
+name: symfony-bundle-flex
+description: "Use this skill when creating Symfony Flex recipes for bundle distribution, writing manifest.json files, configuring automatic bundle registration, importmap injection, environment variable scaffolding, or preparing a bundle for publication on Packagist with Flex integration. Trigger when: 'flex recipe', 'manifest.json symfony', 'bundle distribution', 'publish symfony bundle', 'packagist bundle', 'recipes-contrib', 'copy-from-recipe', 'auto-configure bundle install', 'plug and play bundle'. Also trigger when the user says 'I want users to install my bundle with zero config' or 'automate the bundle setup'. Do NOT trigger for general Composer package publishing unrelated to Symfony bundles."
+---
 
 # Symfony Bundle Flex — Recipes & Distribution
 

@@ -1,5 +1,7 @@
 ---
+description: XML service and Doctrine mapping conventions for Symfony bundles
 globs: config/**/*.xml
+alwaysApply: false
 ---
 
 # XML Configuration Conventions

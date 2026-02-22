@@ -1,5 +1,7 @@
 ---
+description: Stimulus controller and AssetMapper conventions for Symfony bundle assets
 globs: assets/**/*.js, assets/**/*.ts
+alwaysApply: false
 ---
 
 # Bundle UX — Stimulus & AssetMapper

@@ -41,9 +41,7 @@
     "extra": {
         "bundle-ai-kit": {
             "editors": [
-                "cursor",
-                "claude",
-                "antigravity"
+                "cursor"
             ],
             "skills": [
                 "symfony-bundle-core",
